@@ -4,7 +4,9 @@ import ChatBox from './components/ChatBox'
 function App() {
   return (
     <div className="App">
-      <label className="AppHeading">LinkUp</label>
+      <div className="label">
+        <label className="AppHeading">LinkUp</label>
+      </div>
       <ChatBox />
     </div>
   )

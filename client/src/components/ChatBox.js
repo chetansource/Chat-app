@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
+import './ChatBox.css'
 
 const socket = io('http://localhost:3001')
 
@@ -23,23 +24,28 @@ function ChatBox() {
   })
 
   return (
-    <div className="ChatFooter">
-      <ol>
-        {textList.map((text) => (
-          <li key={text}>{text}</li>
-        ))}
-      </ol>
-      <form className="form " onSubmit={(e) => e.preventDefault()}>
-        <input
-          className="textbox"
-          placeholder="write a message.."
-          value={text}
-          onChange={(event) => setText(event.target.value)}
-        ></input>
-        <button className="send-btn" onClick={addText}>
-          Send
-        </button>
-      </form>
+    <div className="container">
+      <div className="chatbody">
+        {/* <p>Hello</p> */}
+        <ol>
+          {textList.map((text) => (
+            <li key={text}>{text}</li>
+          ))}
+        </ol>
+      </div>
+      <div className="chatfooter">
+        <form className="form " onSubmit={(e) => e.preventDefault()}>
+          <input
+            className="textbox"
+            placeholder="write a message.."
+            value={text}
+            onChange={(event) => setText(event.target.value)}
+          ></input>
+          <button className="send-btn" onClick={addText}>
+            Send
+          </button>
+        </form>
+      </div>
     </div>
   )
 }
