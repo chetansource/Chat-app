@@ -21,7 +21,7 @@ function ChatBox() {
       console.log('received from server', args)
       setTextList([...textList, args])
     })
-  })
+  }, [textList])
 
   return (
     <div className="container">

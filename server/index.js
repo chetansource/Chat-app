@@ -8,7 +8,7 @@ const io = new Server(httpServer, { cors: { origin: '*' } })
 
 io.on('connection', (socket) => {
   socket.on('chat-message', (args) => {
-    console.log('args>>>>>', args.text)
+    console.log('args>>>>>', args)
     io.emit('message', args)
   })
 })
