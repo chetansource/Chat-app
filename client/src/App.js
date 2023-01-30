@@ -1,17 +1,19 @@
 import './App.css'
-// import { Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-// import ChatBox from './components/ChatBox'
+import ChatBox from './components/ChatBox'
 import LoginPage from './components/LoginPage'
 
 function App() {
   return (
-    <div className="App">
-      <LoginPage />
-      {/* <Routes>
-        <Route path="/" element={<LoginPage />} />
-      </Routes> */}
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="chatbox" element={<ChatBox />} />
+        </Routes>
+      </div>
+    </Router>
   )
 }
 
