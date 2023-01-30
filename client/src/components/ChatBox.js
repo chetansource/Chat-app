@@ -10,7 +10,7 @@ function ChatBox() {
 
   function addText() {
     if (text.trim() === '') return
-    textList.push(text)
+    textList.push(text.trim())
     socket.emit('chat-message', text)
     console.log('array>>>>', textList)
     setText('')
@@ -21,15 +21,17 @@ function ChatBox() {
       console.log('received from server', args)
       setTextList([...textList, args])
     })
+    return () => {
+      socket.off('message')
+    }
   }, [textList])
 
   return (
     <div className="container">
       <div className="chatbody">
-        {/* <p>Hello</p> */}
         <ol>
-          {textList.map((text) => (
-            <li key={text}>{text}</li>
+          {textList.map((text, index) => (
+            <li key={index}>{text}</li>
           ))}
         </ol>
       </div>

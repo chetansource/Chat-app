@@ -1,0 +1,27 @@
+.loginpage{
+    background: rgb(42, 144, 222);
+    height: 100vh;
+}
+.title{
+    text-align: center;
+    font-size: 30px;
+}
+.loginform{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;                                                                                                                                                                                              
+}
+.username{
+    width: 250px;
+    height: 32px;
+}
+.addUser{
+    width: 255px;
+    height: 25px;
+    background: rgb(84, 146, 245);
+}
+.addUser:hover{
+    background: rgb(50, 226, 26);
+}
+
