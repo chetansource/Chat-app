@@ -3,7 +3,10 @@
     flex-direction: column;
     text-align: center;
     align-items: center;
-    background: rgb(120, 160, 246);
+    background: rgb(81, 145, 242);
+}
+.label{
+    background: rgb(10, 105, 239);
 }
 
 .chatbody{

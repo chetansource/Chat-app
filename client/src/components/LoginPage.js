@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import './LoginPage.css'
+import { useNavigate } from 'react-router-dom'
 
 function LoginPage() {
+  const navigate = useNavigate()
   const [userName, setUserName] = useState('')
 
   function addUser() {
     if (userName.trim() === '') return
     setUserName('')
+    navigate('/chatbox')
   }
 
   return (

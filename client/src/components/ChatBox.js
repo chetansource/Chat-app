@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
 import './ChatBox.css'
+import { useNavigate } from 'react-router-dom'
 
 const socket = io('http://localhost:3001')
 
 function ChatBox() {
+  const navigate = useNavigate()
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
 
@@ -14,6 +16,9 @@ function ChatBox() {
     socket.emit('chat-message', text)
     console.log('array>>>>', textList)
     setText('')
+  }
+  function goBack() {
+    navigate(-1)
   }
 
   useEffect(() => {
@@ -28,6 +33,10 @@ function ChatBox() {
 
   return (
     <div className="container">
+      <div className="header">
+        <label className="label">LinkUp</label>
+        <button onClick={goBack}>LoginPage</button>
+      </div>
       <div className="chatbody">
         <ol>
           {textList.map((text, index) => (
