@@ -1,46 +1,38 @@
 import React, { useEffect, useState } from 'react'
-import { io } from 'socket.io-client'
-import './ChatBox.css'
-import { useNavigate } from 'react-router-dom'
 
-const socket = io('http://localhost:3001')
-
-function ChatBox() {
-  const navigate = useNavigate()
+function ChatBox({ socket, selectedUser }) {
+  // console.log('chat with user>>', selectedUser)
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
 
   function addText() {
     if (text.trim() === '') return
     textList.push(text.trim())
-    socket.emit('chat-message', text)
-    console.log('array>>>>', textList)
+    socket.emit('chat-message', {
+      message: text,
+      name: localStorage.getItem('UserName'),
+      socketID: selectedUser,
+    })
     setText('')
-  }
-  function goBack() {
-    navigate(-1)
   }
 
   useEffect(() => {
     socket.on('message', (args) => {
+      console.log('received')
       console.log('received from server', args)
       setTextList([...textList, args])
     })
     return () => {
       socket.off('message')
     }
-  }, [textList])
+  }, [socket, textList])
 
   return (
-    <div className="container">
-      <div className="header">
-        <label className="label">LinkUp</label>
-        <button onClick={goBack}>LoginPage</button>
-      </div>
+    <div>
       <div className="chatbody">
         <ol>
-          {textList.map((text, index) => (
-            <li key={index}>{text}</li>
+          {textList.map((data, index) => (
+            <li key={index}>{data}</li>
           ))}
         </ol>
       </div>
