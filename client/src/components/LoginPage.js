@@ -1,17 +1,15 @@
 import React, { useState } from 'react'
 import './LoginPage.css'
 import { useNavigate } from 'react-router-dom'
-import { io } from 'socket.io-client'
 
-const socket = io('http://localhost:3001')
-
-function LoginPage() {
+function LoginPage({ socket }) {
   const navigate = useNavigate()
   const [userName, setUserName] = useState('')
 
   function addUser() {
     if (userName.trim() === '') return
     localStorage.setItem('UserName', userName)
+    // console.log('sid', socket.id)
     socket.emit('newuser', { userName, socketID: socket.id })
     setUserName('')
     navigate('/chatpage')

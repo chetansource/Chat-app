@@ -1,36 +1,25 @@
 .container{
     display: flex;
     flex-direction: column;
-    text-align: center;
-    align-items: center;
-    background: rgb(81, 145, 242);
+    background: rgb(96, 134, 191);
 }
 
 .label{
-    background: rgb(10, 105, 239);
+    background: rgb(75, 121, 186);
 }
 .navbtn{
     justify-content: end;
-    background: rgb(10, 105, 239);
+    background: rgb(60, 109, 179);
 }
-
-.chatbody{
-    height: 50vh;
-    width: 500px;
+.header{
     display: flex;
-    flex-direction: column;
-    text-align: right;
-    background: rgb(183, 201, 231);
+    justify-content: center;
+    background: rgb(208, 84, 31);
 }
 
-.textbox{
-    height: 32px;
-    width: 430px;
+.navbtn{
+
 }
-.send-btn{
-    height: 36px;
-    width: 70px;
-}
-.send-btn:hover{
-    background: rgb(169, 250, 64);
-}
+
+
+

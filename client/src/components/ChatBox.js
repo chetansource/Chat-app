@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
+import './ChatBox.css'
 
 function ChatBox({ socket, selectedUser }) {
-  // console.log('chat with user>>', selectedUser)
+  console.log('chat with user>>', selectedUser)
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
 
   function addText() {
     if (text.trim() === '') return
     textList.push(text.trim())
+    console.log('userid>>', selectedUser)
     socket.emit('chat-message', {
       message: text,
-      name: localStorage.getItem('UserName'),
-      socketID: selectedUser,
+      name: selectedUser,
     })
     setText('')
   }

@@ -2,17 +2,14 @@ import React, { useEffect, useState } from 'react'
 import './ChatPage.css'
 import { useNavigate } from 'react-router-dom'
 import ChatBox from './ChatBox'
-import { io } from 'socket.io-client'
 
-const socket = io('http://localhost:3001')
-
-function ChatPage() {
+function ChatPage({ socket }) {
   const navigate = useNavigate()
   const [userList, setUserList] = useState([])
   const [focusedUser, setFocusedUser] = useState('')
 
-  function focusUser(socketid) {
-    setFocusedUser(socketid)
+  function focusUser(socketUser) {
+    setFocusedUser(socketUser)
   }
 
   useEffect(() => {
@@ -21,8 +18,7 @@ function ChatPage() {
       const users = data.filter((user) => user.userName !== User)
       setUserList(users)
     })
-  }, [userList])
-  // console.log('users>>>', userList)
+  }, [socket, userList])
 
   function goBack() {
     navigate(-1)
@@ -35,21 +31,21 @@ function ChatPage() {
         <button className="navbtn" onClick={goBack}>
           LoginPage
         </button>
-        <div>
-          <label>UserList</label>
-          <ol>
-            {userList.map((user) => (
-              <div key={user.socketID}>
-                <input
-                  className="userlist"
-                  value={user.userName}
-                  readOnly
-                  onClick={() => focusUser(user.socketID)}
-                ></input>
-              </div>
-            ))}
-          </ol>
-        </div>
+      </div>
+      <div>
+        <label>UserList</label>
+        <ol>
+          {userList.map((user) => (
+            <div key={user.socketID}>
+              <input
+                className="userlist"
+                value={user.userName}
+                readOnly
+                onClick={() => focusUser(user.userName)}
+              ></input>
+            </div>
+          ))}
+        </ol>
       </div>
       <ChatBox socket={socket} selectedUser={focusedUser} />
     </div>

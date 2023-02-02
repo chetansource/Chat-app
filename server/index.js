@@ -9,18 +9,25 @@ const io = new Server(httpServer, { cors: { origin: '*' } })
 let users = []
 
 io.on('connection', (socket) => {
-  socket.on('chat-message', (args) => {
-    console.log(args)
-    let receiverId = args.socketID
-    let newMessage = args.message
-    // io.emit('message', args)
+  console.log('new client connected')
 
-    //sending the message to the particular client
-    io.to(receiverId).emit('message', newMessage)
-    // console.log('emitting from server', io.to(id).emit('message', message))
+  //receiving the message from one user and sending to another
+  socket.on('chat-message', (args) => {
+    console.log('server side>>', args)
+    let receiverName = args.name
+    // console.log(receiverName)
+    let id
+    for (let user of users) {
+      if (user.userName === receiverName) {
+        id = user.socketID
+      }
+      console.log('socketId', id)
+    }
+    let newMessage = args.message
+    io.to(id).emit('message', newMessage)
   })
 
-  // console.log(`${socket.id} the user just connected to `)
+  // adding the new user
   socket.on('newuser', (user) => {
     users.push(user)
     console.log('usernames>>', users)
