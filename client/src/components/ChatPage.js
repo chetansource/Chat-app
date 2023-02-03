@@ -24,18 +24,23 @@ function ChatPage({ socket }) {
     navigate(-1)
   }
 
+  const userName = localStorage.getItem('UserName')
+
   return (
     <div className="container">
       <div className="header">
         <label className="label">LinkUp</label>
+        <div className="showLoginName">
+          <label className="loginName">{userName}</label>
+        </div>
         <button className="navbtn" onClick={goBack}>
-          LoginPage
+          Logout
         </button>
       </div>
       <div className="chatpage">
         <div className="list">
           <label className="heading">UserList</label>
-          <ol>
+          <ol className="orderedList">
             {userList.map((user) => (
               <div key={user.socketID}>
                 <input

@@ -1,5 +1,5 @@
 .loginpage{
-    background: rgb(42, 144, 222);
+    background: rgb(130, 175, 205);
     height: 100vh;
 }
 .title{
@@ -19,9 +19,9 @@
 .addUser{
     width: 255px;
     height: 25px;
-    background: rgb(84, 146, 245);
+    background: rgb(138, 163, 203);
 }
 .addUser:hover{
-    background: rgb(50, 226, 26);
+    background: rgb(206, 232, 210);
 }
 

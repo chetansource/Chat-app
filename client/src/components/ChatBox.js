@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import './ChatBox.css'
 
 function ChatBox({ socket, selectedUser }) {
-  console.log('chat with user>>', selectedUser)
+  // console.log('chat with user>>', selectedUser)
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
 
   function addText() {
     if (text.trim() === '') return
     textList.push(text.trim())
-    console.log('userid>>', selectedUser)
+    // console.log('userid>>', selectedUser)
     socket.emit('chat-message', {
       message: text,
       name: selectedUser,
@@ -31,6 +31,9 @@ function ChatBox({ socket, selectedUser }) {
   return (
     <div>
       <div className="chatbody">
+        <div className="displaySenderName">
+          <input className="senderName" value={selectedUser}></input>
+        </div>
         <ol>
           {textList.map((data, index) => (
             <li key={index}>{data}</li>
