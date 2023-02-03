@@ -32,22 +32,24 @@ function ChatPage({ socket }) {
           LoginPage
         </button>
       </div>
-      <div>
-        <label>UserList</label>
-        <ol>
-          {userList.map((user) => (
-            <div key={user.socketID}>
-              <input
-                className="userlist"
-                value={user.userName}
-                readOnly
-                onClick={() => focusUser(user.userName)}
-              ></input>
-            </div>
-          ))}
-        </ol>
+      <div className="chatpage">
+        <div className="list">
+          <label className="heading">UserList</label>
+          <ol>
+            {userList.map((user) => (
+              <div key={user.socketID}>
+                <input
+                  className="userlist"
+                  value={user.userName}
+                  readOnly
+                  onClick={() => focusUser(user.userName)}
+                ></input>
+              </div>
+            ))}
+          </ol>
+        </div>
+        <ChatBox socket={socket} selectedUser={focusedUser} />
       </div>
-      <ChatBox socket={socket} selectedUser={focusedUser} />
     </div>
   )
 }
