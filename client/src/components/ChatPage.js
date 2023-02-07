@@ -9,6 +9,7 @@ function ChatPage({ socket }) {
   const [focusedUser, setFocusedUser] = useState('')
 
   function focusUser(socketUser) {
+    // use setFocusedUser
     setFocusedUser(socketUser)
   }
 
@@ -43,7 +44,7 @@ function ChatPage({ socket }) {
           <ol className="orderedList">
             {userList.map((user) => (
               <div key={user.socketID}>
-                <input
+                <input //use p tag or div tag
                   className="userlist"
                   value={user.userName}
                   readOnly

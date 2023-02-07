@@ -19,7 +19,6 @@ function ChatBox({ socket, selectedUser }) {
 
   useEffect(() => {
     socket.on('message', (args) => {
-      console.log('received')
       console.log('received from server', args)
       setTextList([...textList, args])
     })
@@ -36,7 +35,9 @@ function ChatBox({ socket, selectedUser }) {
         </div>
         <ol>
           {textList.map((data, index) => (
-            <li key={index}>{data}</li>
+            <div className="acceptMessage" key={index}>
+              {data}
+            </div>
           ))}
         </ol>
       </div>
