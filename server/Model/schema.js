@@ -20,3 +20,6 @@ const contacts = `CREATE TABLE contacts(
     CONSTRAINT fk_user_id FOREIGN KEY(user_id) REFERENCES users(user_id), 
     CONSTRAINT fk_connected_id FOREIGN KEY(connected_id) REFERENCES users(user_id)
     );`
+
+const insertUser = `INSERT INTO users(user_name) VALUES('chetan');`
+const insertMessage = `INSERT INTO messages(message, message_time,sender_id,receiver_id) VALUES('hey hello',current_timestamp,1,2);`
