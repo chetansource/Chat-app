@@ -1,10 +1,15 @@
 import express from 'express'
 import { Server } from 'socket.io'
 import { createServer } from 'http'
+import router from './Routes/userRoute.js'
+import router from './Routes/messageRoute.js'
 
 const app = express()
 const httpServer = createServer(app)
 const io = new Server(httpServer, { cors: { origin: '*' } })
+
+app.use('/user', router)
+app.use('/message', router)
 
 let users = [] //use object
 

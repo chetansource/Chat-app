@@ -1,6 +1,5 @@
 import pg from 'pg'
 import dotenv from 'dotenv'
-import { query } from 'express'
 
 dotenv.config()
 const { Pool } = pg
@@ -23,34 +22,39 @@ async function executeQuery(query, params) {
   return res
 }
 
-async function addUser(username) {
-  const query = 'INSERT INTO users(user_name) VALUES($1)'
-  const params = [username]
-  const res = await executeQuery(query, params)
-  console.log('adduser>>', res)
-  return res
-}
+// add the user to the database when i have logged in
+// export async function insertUser(username) {
+//   const query = 'INSERT INTO users(user_name) VALUES($1)'
+//   const params = [username]
+//   const res = await executeQuery(query, params)
+//   console.log('adduser>>', res)
+//   return res
+// }
 
-async function insertMessage(msg) {
+export async function insertMessage(msg) {
   const query =
-    'INSERT INTO messages(message, message_time,sender_id,receiver_id) VALUES($1,$2,$3,$4)'
-  const params = [msg.text, current_timestamp, msg.senderId, msg.receiverId]
+    'INSERT INTO messages(message,sender_id,receiver_id) VALUES($1,$2,$3)'
+  const params = [msg.text, msg.senderId, msg.receiverId]
   const res = await executeQuery(query, params)
+  console.log('message>>', res)
   return res
 }
 
-async function getUsers() {
-  const query = 'select * from users'
-  const res = await executeQuery(query)
-  return res
-}
+//get the contact list which i have connected to
+// export async function getUsers(id) {
+//   const query =
+//     'select user_name from users  inner join contacts on user_id = contacts.connected_id and userid=$1'
+//   const params = [id]
+//   const res = await executeQuery(query, params)
+//   console.log('array>>', res.rows)
+//   return res.rows
+// }
 
-async function getMessages() {
-  const query = 'select * from messages'
-  const res = await executeQuery(query)
-  return res
-}
-// const data = await pool.query('select * from users')
-// console.log('data>>>', data.rows)
+// export async function getMessages() {
+//   const query = 'select * from messages'
+//   const res = await executeQuery(query)
+//   return res
+// }
+
 // const message = await pool.query('select * from messages')
 // console.log('messages>>', message.rows)
