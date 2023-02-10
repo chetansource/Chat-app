@@ -5,11 +5,13 @@ import { router as userRouter } from './Routes/userRoute.js'
 import { router as msgRouter } from './Routes/messageRoute.js'
 
 const app = express()
+app.use(express.json()) //It parses incoming requests with JSON payloads
+
 const httpServer = createServer(app)
 const io = new Server(httpServer, { cors: { origin: '*' } })
 
-app.use('/user', userRouter)
-app.use('/message', msgRouter)
+app.use('/users', userRouter)
+app.use('/messages', msgRouter)
 
 let users = {}
 

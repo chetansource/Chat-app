@@ -7,7 +7,7 @@ import {
 
 export async function addUser(req, res) {
   try {
-    const user = insertUser(req.body.userName)
+    const user = await insertUser(req.body.userName)
     res.json(user)
   } catch (error) {
     res.sendStatus(500)
@@ -16,7 +16,7 @@ export async function addUser(req, res) {
 
 export async function getUserContacts(req, res) {
   try {
-    const users = getUsers(req.params.userId)
+    const users = await getUsers(req.params.userId)
     res.json(users)
   } catch (error) {
     res.sendStatus(500)
@@ -25,7 +25,7 @@ export async function getUserContacts(req, res) {
 
 export async function sendMessage(req, res) {
   try {
-    const message = insertMessage(req.params.id, req.body)
+    const message = await insertMessage(req.params.id, req.body)
     res.sendStatus(201)
   } catch (error) {
     res.sendStatus(500)
@@ -34,7 +34,7 @@ export async function sendMessage(req, res) {
 
 export async function getUserMessage(req, res) {
   try {
-    const messagesInfo = getUserMessages(
+    const messagesInfo = await getUserMessages(
       req.params.sender_id,
       req.params.receiver_id
     )
