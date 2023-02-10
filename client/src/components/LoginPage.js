@@ -10,7 +10,7 @@ function LoginPage({ socket }) {
     if (userName.trim() === '') return
     localStorage.setItem('UserName', userName)
     // console.log('sid', socket.id)
-    socket.emit('newuser', { userName, socketID: socket.id })
+    socket.emit('newuser', userName, socket.id)
     setUserName('')
     navigate('/chatpage')
   }

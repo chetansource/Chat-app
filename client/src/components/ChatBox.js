@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './ChatBox.css'
 
 function ChatBox({ socket, selectedUser }) {
-  // console.log('chat with user>>', selectedUser)
+  console.log('chat with user>>', socket.id)
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
 

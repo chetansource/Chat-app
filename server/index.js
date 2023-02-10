@@ -1,38 +1,33 @@
 import express from 'express'
 import { Server } from 'socket.io'
 import { createServer } from 'http'
-import router from './Routes/userRoute.js'
-import router from './Routes/messageRoute.js'
+import { router as userRouter } from './Routes/userRoute.js'
+import { router as msgRouter } from './Routes/messageRoute.js'
 
 const app = express()
 const httpServer = createServer(app)
 const io = new Server(httpServer, { cors: { origin: '*' } })
 
-app.use('/user', router)
-app.use('/message', router)
+app.use('/user', userRouter)
+app.use('/message', msgRouter)
 
-let users = [] //use object
+let users = {}
 
 io.on('connection', (socket) => {
   console.log('new client connected')
 
-  //receiving the message from one user and sending to another
+  // receiving the message from one user and sending to another
   socket.on('chat-message', (args) => {
-    let receiverName = args.name
     let id
-    for (let user of users) {
-      if (user.userName === receiverName) {
-        id = user.socketID
-      }
-      console.log('socketId', id)
-    }
+    id = users[args.name]
+    console.log('id', id)
     let newMessage = args.message
     io.to(id).emit('message', newMessage)
   })
 
   // adding the new user
-  socket.on('newuser', (user) => {
-    users.push(user)
+  socket.on('newuser', (name, id) => {
+    users[name] = id
     console.log('usernames>>', users)
     io.emit('newUserResponse', users)
   })
