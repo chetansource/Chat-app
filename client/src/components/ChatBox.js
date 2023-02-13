@@ -9,7 +9,6 @@ function ChatBox({ socket, selectedUser }) {
   function addText() {
     if (text.trim() === '') return
     textList.push(text.trim())
-    // console.log('userid>>', selectedUser)
     socket.emit('chat-message', {
       message: text,
       name: selectedUser,

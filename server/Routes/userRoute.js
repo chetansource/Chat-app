@@ -1,7 +1,6 @@
 import express from 'express'
-import { addUser, getUserContacts } from '../Controllers/controller.js'
+import { addUser } from '../Controllers/controller.js'
 
 export const router = express.Router()
 
-router.get('/:id', getUserContacts)
-router.post('/', addUser) //userlogin
+router.post('/', addUser) //usersignup

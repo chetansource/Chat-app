@@ -3,6 +3,7 @@ import { Server } from 'socket.io'
 import { createServer } from 'http'
 import { router as userRouter } from './Routes/userRoute.js'
 import { router as msgRouter } from './Routes/messageRoute.js'
+import { router as userListRouter } from './Routes/userListRoute.js'
 
 const app = express()
 app.use(express.json()) //It parses incoming requests with JSON payloads
@@ -12,6 +13,7 @@ const io = new Server(httpServer, { cors: { origin: '*' } })
 
 app.use('/users', userRouter)
 app.use('/messages', msgRouter)
+app.use('/contacts', userListRouter)
 
 let users = {}
 

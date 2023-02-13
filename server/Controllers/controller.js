@@ -3,13 +3,18 @@ import {
   insertMessage,
   getUsers,
   getUserMessages,
+  userNameAvailable,
 } from '../Model/database.js'
 
 export async function addUser(req, res) {
   try {
+    const userNameAvailableORNot = await userNameAvailable(req.body.userName)
+    if (userNameAvailableORNot === 'UnAvailable')
+      return res.status(400).json({ message: 'username already exist' })
     const user = await insertUser(req.body.userName)
     res.json(user)
   } catch (error) {
+    console.log('error', error)
     res.sendStatus(500)
   }
 }

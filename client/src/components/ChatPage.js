@@ -11,11 +11,8 @@ function ChatPage({ socket }) {
   useEffect(() => {
     socket.on('newUserResponse', (data) => {
       const User = localStorage.getItem('UserName')
-      // console.log(data)
       const usernames = Object.keys(data)
-      // console.log('obj>>', usernames)
       const users = usernames.filter((user) => user !== User)
-      // console.log('except one>', users)
       setUserList(users)
     })
   }, [socket, userList])
