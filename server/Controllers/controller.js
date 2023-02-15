@@ -6,7 +6,7 @@ import {
   userNameAvailable,
 } from '../Model/database.js'
 
-export async function addUser(req, res) {
+export async function registerUser(req, res) {
   try {
     const userNameAvailableORNot = await userNameAvailable(req.body.userName)
     if (userNameAvailableORNot === 'UnAvailable')

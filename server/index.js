@@ -32,7 +32,6 @@ io.on('connection', (socket) => {
   // adding the new user
   socket.on('newuser', (name, id) => {
     users[name] = id
-    console.log('usernames>>', users)
     io.emit('newUserResponse', users)
   })
 })
