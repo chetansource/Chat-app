@@ -1,6 +1,7 @@
 const users = `CREATE TABLE users(
     user_id serial PRIMARY KEY,
-    user_name VARCHAR UNIQUE NOT NULL
+    user_name VARCHAR UNIQUE NOT NULL,
+    password VARCHAR UNIQUE NOT NULL
     );`
 
 const messages = `CREATE TABLE messages( 

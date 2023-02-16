@@ -30,12 +30,12 @@ export async function userNameAvailable(username) {
 }
 
 // add the user to the database when i user logged in
-export async function insertUser(username) {
-  const query = 'INSERT INTO users(user_name) VALUES($1)'
-  const params = [username]
+export async function insertUser(username, passwd) {
+  const query = 'INSERT INTO users(user_name,password) VALUES($1,$2)'
+  const params = [username, passwd]
   const res = await pool.query(query, params)
-  console.log('adduser>>', res.rows)
-  return res.rows
+  console.log('adduser>>', res)
+  return res
 }
 
 //send message to a frd

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './SignUpPage.css'
 import { useNavigate } from 'react-router-dom'
+import { userSignup } from '../requests.js'
 
 function SignUpPage() {
   const navigate = useNavigate()
@@ -8,11 +9,14 @@ function SignUpPage() {
   const [passWord, setPassWord] = useState('')
   const [confirmPassword, setConfirmpassword] = useState('')
 
-  function registerUser() {
-    console.log(username.trim().toLowerCase())
-    if (username.trim() === '') return
-
+  async function registerUser() {
+    if (username.trim().length === 0) return
     setUsername('')
+    if (passWord.trim().length < 6) return
+    setPassWord('')
+    if (confirmPassword.trim().length < 6) return
+    setConfirmpassword('')
+    await userSignup(username.trim(), passWord.trim(), confirmPassword.trim())
   }
 
   function changeRoute() {
@@ -42,17 +46,16 @@ function SignUpPage() {
               className="pass"
               placeholder="enter password"
               value={passWord}
-              onchange={(e) => setPassWord(e.target.value)}
+              onChange={(e) => setPassWord(e.target.value)}
             ></input>
             <label>Confirm Password</label>
             <input
               className="pin"
               placeholder="confirm password"
               value={confirmPassword}
-              onchange={(e) => setConfirmpassword(e.target.value)}
+              onChange={(e) => setConfirmpassword(e.target.value)}
             ></input>
             <button className="btn" onClick={registerUser}>
-              {' '}
               Create Account
             </button>
           </div>
