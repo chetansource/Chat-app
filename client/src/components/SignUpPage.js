@@ -17,6 +17,7 @@ function SignUpPage() {
     if (confirmPassword.trim().length < 6) return
     setConfirmpassword('')
     await userSignup(username.trim(), passWord.trim(), confirmPassword.trim())
+    navigate('/')
   }
 
   function changeRoute() {
@@ -32,7 +33,7 @@ function SignUpPage() {
       </div>
       <form className="signupform" onSubmit={(e) => e.preventDefault()}>
         <div className="smallwrapper">
-          <div className="sign-label">signup Page</div>
+          <div className="sign-label">signup</div>
           <div className="details">
             <label className="">Username</label>
             <input
@@ -43,6 +44,7 @@ function SignUpPage() {
             ></input>
             <label className="">Password</label>
             <input
+              type="password"
               className="pass"
               placeholder="enter password"
               value={passWord}
@@ -50,6 +52,7 @@ function SignUpPage() {
             ></input>
             <label>Confirm Password</label>
             <input
+              type="password"
               className="pin"
               placeholder="confirm password"
               value={confirmPassword}

@@ -1,17 +1,23 @@
 import React, { useState } from 'react'
 import './LoginPage.css'
 import { useNavigate } from 'react-router-dom'
+import { loginUser } from '../requests.js'
 
 function LoginPage({ socket }) {
   const navigate = useNavigate()
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
 
-  function addUser() {
-    if (userName.trim() === '') return
-    localStorage.setItem('UserName', userName)
-    socket.emit('newuser', userName, socket.id)
+  function LoginUser() {
+    if (userName.trim().length === 0) return
     setUserName('')
+    if (password.trim().length < 6) return
+    setPassword('')
+    loginUser(userName, password)
+
+    // localStorage.setItem('UserName', userName)
+    // socket.emit('newuser', userName, socket.id)
+
     navigate('/chatpage')
   }
   function routeChange() {
@@ -27,7 +33,7 @@ function LoginPage({ socket }) {
       </div>
       <form className="loginform" onSubmit={(e) => e.preventDefault()}>
         <div className="container">
-          <div className="title">LoginPage</div>
+          <div className="title">Login</div>
           <div className="elements">
             <label>Username</label>
             <input
@@ -38,12 +44,13 @@ function LoginPage({ socket }) {
             ></input>
             <label className="passlabel">Password</label>
             <input
+              type="password"
               className="password"
               placeholder="Enter password"
               value={password}
-              onchange={(event) => setPassword(event.tagert.value)}
+              onChange={(event) => setPassword(event.target.value)}
             ></input>
-            <button className="addUser" onClick={addUser}>
+            <button className="addUser" onClick={LoginUser}>
               SignIn
             </button>
           </div>

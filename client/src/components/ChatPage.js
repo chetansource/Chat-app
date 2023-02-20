@@ -18,13 +18,13 @@ function ChatPage({ socket }) {
   }, [socket, userList])
 
   function goBack() {
-    navigate(-1)
+    navigate('/')
   }
 
   const userName = localStorage.getItem('UserName')
 
   return (
-    <div className="container">
+    <div className="container1">
       <div className="header">
         <label className="label">LinkUp</label>
         <div className="showLoginName">

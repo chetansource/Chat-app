@@ -4,31 +4,51 @@ import {
   getUsers,
   getUserMessages,
   userNameAvailable,
+  userDetails,
+  userSession,
 } from '../Model/database.js'
 import bcrypt from 'bcrypt'
-
-// console.log(bcrypt)
+import { v4 as uuidv4 } from 'uuid'
 
 export async function registerUser(req, res) {
   try {
     const userNameAvailableORNot = await userNameAvailable(req.body.userName)
     if (userNameAvailableORNot === 'UnAvailable')
       return res.status(400).json({ message: 'username already exist' })
-    // console.log('useravailable>>>', userNameAvailableORNot)
-    // console.log('name>>', req.body.userName)
-    // console.log('pass>>', req.body.password)
-    // console.log('confirmpass>>', req.body.confirmpwd)
     if (req.body.password === req.body.confirmpwd) {
-      const salt = bcrypt.genSaltSync()
-      console.log('salt>>', salt)
+      const salt = bcrypt.genSaltSync() //by default it uses 12 salt rounds
       const hash = bcrypt.hashSync(req.body.password, salt)
-      console.log('hashed>>', hash)
       const user = await insertUser(req.body.userName, hash)
-      console.log('controller_user>>', user)
       res.json(user)
     } else {
       res.status(401).json({ message: 'Invalid Credentials' }) //when the client provides no credentials or invalid credentials
     }
+  } catch (error) {
+    console.log('error', error)
+    res.sendStatus(500)
+  }
+}
+
+export async function loginUser(req, res) {
+  try {
+    // console.log('uuid>>', uuid())
+    const user = await userDetails(req.body.userName)
+    console.log('users>>', user)
+    if (user[0] === undefined) {
+      return res.status(404).json({ message: 'user doesnt exists' })
+    }
+    // if(user[0].user_name)
+    bcrypt.compare(req.body.password, user[0].password, async function (error, result) {
+      if (result === true) {
+        console.log('verified')
+        const sessionid = uuidv4()
+        const createSession = await userSession(sessionid, user[0].user_id)
+        res.cookie('session', sessionid, { httpOnly: true }).sendStatus(200)
+      } else {
+        console.log('not verified')
+        res.status(401).json({ message: 'Invalid Credentials' })
+      }
+    })
   } catch (error) {
     console.log('error', error)
     res.sendStatus(500)
@@ -55,10 +75,7 @@ export async function sendMessage(req, res) {
 
 export async function getUserMessage(req, res) {
   try {
-    const messagesInfo = await getUserMessages(
-      req.params.sender_id,
-      req.params.receiver_id
-    )
+    const messagesInfo = await getUserMessages(req.params.sender_id, req.params.receiver_id)
     res.json(messagesInfo)
   } catch (error) {
     res.sendStatus(500)

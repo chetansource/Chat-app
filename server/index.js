@@ -5,10 +5,12 @@ import { router as msgRouter } from './Routes/messageRoute.js'
 import { router as userListRouter } from './Routes/userListRoute.js'
 import { socketConnection } from './Utility/sockets.js'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 
 const app = express()
 app.use(cors()) //{ methods: ['GET', 'POST', 'DELETE', 'PUT'] }
 app.use(express.json()) //It parses incoming requests with JSON payloads
+app.use(cookieParser())
 
 const httpServer = createServer(app)
 socketConnection(httpServer)

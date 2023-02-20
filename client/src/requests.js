@@ -25,3 +25,30 @@ export async function userSignup(name, passwd, repwd) {
     console.log(error)
   }
 }
+
+// signup
+export async function loginUser(name, passwd) {
+  try {
+    const config = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        userName: name,
+        password: passwd,
+      }),
+    }
+    const url = globalUrl + '/users/login'
+    const response = await fetch(url, config)
+    if (!response.ok) {
+      throw new Error(`http error status:${response.status}`)
+    }
+    const data = await response.json()
+    console.log('client side response>>', data)
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}

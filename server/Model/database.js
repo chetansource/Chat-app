@@ -37,11 +37,25 @@ export async function insertUser(username, passwd) {
   console.log('adduser>>', res)
   return res
 }
+//fetch  data for login
+export async function userDetails(username) {
+  const query = `SELECT * from users WHERE user_name = $1`
+  const params = [username]
+  const res = await pool.query(query, params)
+  return res.rows
+}
+
+//creating user Session
+export async function userSession(Sessionid, Userid) {
+  const query = `INSERT INTO sessions(session_id,user_id) VALUES($1,$2)`
+  const params = [Sessionid, Userid]
+  const res = await pool.query(query, params)
+  return res
+}
 
 //send message to a frd
 export async function insertMessage(msg) {
-  const query =
-    'INSERT INTO messages(message,sender_id,receiver_id) VALUES($1,$2,$3)'
+  const query = 'INSERT INTO messages(message,sender_id,receiver_id) VALUES($1,$2,$3)'
   const params = [msg.text, msg.senderId, msg.receiverId]
   const res = await pool.query(query, params)
   console.log('message>>', res)
