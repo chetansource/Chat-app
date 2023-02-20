@@ -41,9 +41,9 @@ export async function loginUser(req, res) {
     bcrypt.compare(req.body.password, user[0].password, async function (error, result) {
       if (result === true) {
         console.log('verified')
-        const sessionid = uuidv4()
-        const createSession = await userSession(sessionid, user[0].user_id)
-        res.cookie('session', sessionid, { httpOnly: true }).sendStatus(200)
+        const sessionId = uuidv4()
+        await userSession(sessionId, user[0].user_id)
+        res.cookie('session', sessionId, { httpOnly: true }).sendStatus(200)
       } else {
         console.log('not verified')
         res.status(401).json({ message: 'Invalid Credentials' })

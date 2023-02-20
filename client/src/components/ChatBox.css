@@ -1,6 +1,6 @@
 .chatbody{
     height: 50vh;
-    width: 500px;
+    width: 507px;
     display: flex;
     flex-direction: column;
     text-align: right;
@@ -19,7 +19,7 @@
     background: rgb(169, 250, 64);
 }
 .senderName{
-    width: 492px;
+    width: 500px;
     height: 30px;
     font-size: 16px;
     background: rgba(222, 231, 210, 0.945);

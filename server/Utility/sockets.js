@@ -1,7 +1,7 @@
 import { Server } from 'socket.io'
 
 export function socketConnection(httpServer) {
-  const io = new Server(httpServer, { cors: { origin: '*' } })
+  const io = new Server(httpServer, { cors: { origin: ['http://localhost:3000'] }, cookie: true })
 
   let users = {}
 

@@ -15,8 +15,8 @@ function LoginPage({ socket }) {
     setPassword('')
     loginUser(userName, password)
 
-    // localStorage.setItem('UserName', userName)
-    // socket.emit('newuser', userName, socket.id)
+    localStorage.setItem('UserName', userName)
+    socket.emit('newuser', userName, socket.id)
 
     navigate('/chatpage')
   }

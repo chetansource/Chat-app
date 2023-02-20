@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import './ChatPage.css'
 import { useNavigate } from 'react-router-dom'
 import ChatBox from './ChatBox'
+import ConnectBox from './ConnectBox'
 
 function ChatPage({ socket }) {
   const navigate = useNavigate()
   const [userList, setUserList] = useState([])
   const [focusedUser, setFocusedUser] = useState('')
+
+  console.log('userlist>>', userList)
 
   useEffect(() => {
     socket.on('newUserResponse', (data) => {
@@ -48,6 +51,7 @@ function ChatPage({ socket }) {
           </ol>
         </div>
         <ChatBox socket={socket} selectedUser={focusedUser} />
+        <ConnectBox />
       </div>
     </div>
   )

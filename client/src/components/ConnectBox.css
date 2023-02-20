@@ -1,0 +1,24 @@
+.connectBar{
+    width: 200px;
+    height: 54vh;
+    background: rgb(67, 150, 209);
+}
+.l1{
+    display: flex;
+    font-size: 25px;
+    height: 36px;
+    justify-content: center;
+    background: rgb(49, 121, 184);
+}
+.aduser{
+    width:190px;
+    height:30px;
+    font-size: 18px;
+}
+.addbtn{
+    width:70px;
+    height: 30px;
+}
+.addbtn:hover{
+    background: rgb(169, 250, 64);
+}

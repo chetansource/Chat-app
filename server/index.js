@@ -8,7 +8,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
 const app = express()
-app.use(cors()) //{ methods: ['GET', 'POST', 'DELETE', 'PUT'] }
+app.use(cors({ origin: ['http://localhost:3000'], credentials: true })) //{ methods: ['GET', 'POST', 'DELETE', 'PUT'] }
 app.use(express.json()) //It parses incoming requests with JSON payloads
 app.use(cookieParser())
 
