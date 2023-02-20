@@ -26,7 +26,7 @@ export async function userSignup(name, passwd, repwd) {
   }
 }
 
-// signup
+// login
 export async function loginUser(name, passwd) {
   try {
     const config = {

@@ -31,13 +31,11 @@ export async function registerUser(req, res) {
 
 export async function loginUser(req, res) {
   try {
-    // console.log('uuid>>', uuid())
     const user = await userDetails(req.body.userName)
     console.log('users>>', user)
     if (user[0] === undefined) {
       return res.status(404).json({ message: 'user doesnt exists' })
     }
-    // if(user[0].user_name)
     bcrypt.compare(req.body.password, user[0].password, async function (error, result) {
       if (result === true) {
         console.log('verified')

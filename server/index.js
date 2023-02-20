@@ -8,9 +8,9 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
 const app = express()
-app.use(cors({ origin: ['http://localhost:3000'], credentials: true })) //{ methods: ['GET', 'POST', 'DELETE', 'PUT'] }
+app.use(cors({ origin: ['http://localhost:3000'], credentials: true }))
 app.use(express.json()) //It parses incoming requests with JSON payloads
-app.use(cookieParser())
+app.use(cookieParser()) //which parses cookies attached to the client request object.
 
 const httpServer = createServer(app)
 socketConnection(httpServer)
