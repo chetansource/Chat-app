@@ -32,17 +32,15 @@ export async function registerUser(req, res) {
 export async function loginUser(req, res) {
   try {
     const user = await userDetails(req.body.userName)
-    if (user[0] === undefined || req.body.userName === user[0]) {
+    if (user[0] === undefined) {
       return res.status(404).json({ message: 'user doesnt exists' }) //bad request
     }
     bcrypt.compare(req.body.password, user[0].password, async function (error, result) {
       if (result === true) {
-        console.log('verified')
         const sessionId = uuidv4()
         await userSession(sessionId, user[0].user_id)
         res.cookie('session', sessionId, { httpOnly: true }).sendStatus(200)
       } else {
-        console.log('not verified')
         res.status(401).json({ message: 'Invalid Credentials' })
       }
     })

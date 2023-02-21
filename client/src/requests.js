@@ -16,11 +16,7 @@ export async function userSignup(name, passwd, repwd) {
     }
     const url = globalUrl + '/users/signup'
     const response = await fetch(url, config)
-    if (!response.ok) {
-      return response.json()
-    }
-    const data = await response.json()
-    return data
+    return await response.json()
   } catch (error) {
     console.log(error)
   }
@@ -42,12 +38,12 @@ export async function loginUser(name, passwd) {
     }
     const url = globalUrl + '/users/login'
     const response = await fetch(url, config)
-    if (!response.ok) {
-      throw new Error(`http error status:${response.status}`)
+    const status = response.status
+    if (status === 200) {
+      return response.status
+    } else {
+      return await response.json()
     }
-    const data = await response.json()
-    console.log('client side response>>', data)
-    return data
   } catch (error) {
     console.log(error)
   }

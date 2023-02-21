@@ -18,18 +18,19 @@ function SignUpPage() {
         setPassWord(''),
       ]
     }
+    setPassWord('')
     if (confirmPassword.trim().length < 6) {
       return [
         setErrorMessage('password needs atleast 6 characters'),
         setConfirmpassword(''),
       ]
     }
+    setConfirmpassword('')
     const data = await userSignup(
       username.trim(),
       passWord.trim(),
       confirmPassword.trim()
     )
-    console.log('signup>>', data.rowCount)
     if (data.message === 'username already exist') {
       setErrorMessage('choose different user name')
     } else if (data.message === 'Invalid Credentials') {

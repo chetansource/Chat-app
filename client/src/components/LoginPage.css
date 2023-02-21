@@ -47,7 +47,7 @@
 .addUser{
     margin-top: 10px;
     width: 255px;
-    height: 30px;
+    height: 35px;
     font-size: 17px;
     background: rgb(246, 211, 134);
 }
@@ -64,5 +64,9 @@
 }
 .barelement:hover{
     cursor: pointer;
+}
+.loginError{
+    color: crimson;
+    font-size: 13px;
 }
 

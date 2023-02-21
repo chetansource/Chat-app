@@ -7,18 +7,31 @@ function LoginPage({ socket }) {
   const navigate = useNavigate()
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
-  function LoginUser() {
+  async function LoginUser() {
     if (userName.trim().length === 0) return
     setUserName('')
-    if (password.trim().length < 6) return
+    if (password.trim().length < 6) {
+      return [setErrorMessage('password needs atleast 6 characters'), setPassword('')]
+    }
     setPassword('')
-    loginUser(userName, password)
 
     localStorage.setItem('UserName', userName)
     socket.emit('newuser', userName, socket.id)
 
-    navigate('/chatpage')
+    const loginData = await loginUser(userName, password)
+    console.log('>>>>', loginData)
+    userErrors(loginData)
+  }
+  function userErrors(data) {
+    if (data.message === 'user doesnt exists') {
+      setErrorMessage('please enter correct user name')
+    } else if (data.message === 'Invalid Credentials') {
+      setErrorMessage('Incorrect password')
+    } else if (data === 200) {
+      navigate('/chatpage')
+    }
   }
   function routeChange() {
     navigate('/signup')
@@ -50,6 +63,7 @@ function LoginPage({ socket }) {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             ></input>
+            <p className="loginError">{errorMessage}</p>
             <button className="addUser" onClick={LoginUser}>
               SignIn
             </button>
