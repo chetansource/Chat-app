@@ -1,7 +1,7 @@
 import {
   insertUser,
   insertMessage,
-  getUsers,
+  getContacts,
   getUserMessages,
   userNameAvailable,
   userDetails,
@@ -16,8 +16,8 @@ export async function registerUser(req, res) {
     if (userNameAvailableORNot === 'UnAvailable')
       return res.status(400).json({ message: 'username already exist' })
     if (req.body.password === req.body.confirmpwd) {
-      const salt = bcrypt.genSaltSync() //by default it uses 12 salt rounds
-      const hash = bcrypt.hashSync(req.body.password, salt)
+      const salt = await bcrypt.genSalt() //by default it uses 12 salt rounds
+      const hash = await bcrypt.hash(req.body.password, salt)
       const user = await insertUser(req.body.userName, hash)
       res.json(user)
     } else {
@@ -32,9 +32,8 @@ export async function registerUser(req, res) {
 export async function loginUser(req, res) {
   try {
     const user = await userDetails(req.body.userName)
-    console.log('users>>', user)
-    if (user[0] === undefined) {
-      return res.status(404).json({ message: 'user doesnt exists' })
+    if (user[0] === undefined || req.body.userName === user[0]) {
+      return res.status(404).json({ message: 'user doesnt exists' }) //bad request
     }
     bcrypt.compare(req.body.password, user[0].password, async function (error, result) {
       if (result === true) {
@@ -55,7 +54,7 @@ export async function loginUser(req, res) {
 
 export async function getUserContacts(req, res) {
   try {
-    const users = await getUsers(req.params.userId)
+    const users = await getContacts(req.params.userId)
     res.json(users)
   } catch (error) {
     res.sendStatus(500)

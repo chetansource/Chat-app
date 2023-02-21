@@ -68,3 +68,7 @@
     cursor: pointer;
     background: rgb(230, 200, 31);
 }
+.usrName{
+    color: crimson;
+    font-size: 13px;
+}

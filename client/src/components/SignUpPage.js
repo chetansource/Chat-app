@@ -8,16 +8,35 @@ function SignUpPage() {
   const [username, setUsername] = useState('')
   const [passWord, setPassWord] = useState('')
   const [confirmPassword, setConfirmpassword] = useState('')
-
+  const [errorMessage, setErrorMessage] = useState('')
   async function registerUser() {
     if (username.trim().length === 0) return
     setUsername('')
-    if (passWord.trim().length < 6) return
-    setPassWord('')
-    if (confirmPassword.trim().length < 6) return
-    setConfirmpassword('')
-    await userSignup(username.trim(), passWord.trim(), confirmPassword.trim())
-    navigate('/')
+    if (passWord.trim().length < 6) {
+      return [
+        setErrorMessage('password needs atleast 6 characters'),
+        setPassWord(''),
+      ]
+    }
+    if (confirmPassword.trim().length < 6) {
+      return [
+        setErrorMessage('password needs atleast 6 characters'),
+        setConfirmpassword(''),
+      ]
+    }
+    const data = await userSignup(
+      username.trim(),
+      passWord.trim(),
+      confirmPassword.trim()
+    )
+    console.log('signup>>', data.rowCount)
+    if (data.message === 'username already exist') {
+      setErrorMessage('choose different user name')
+    } else if (data.message === 'Invalid Credentials') {
+      setErrorMessage('password doesnt match')
+    } else {
+      navigate('/')
+    }
   }
 
   function changeRoute() {
@@ -58,6 +77,7 @@ function SignUpPage() {
               value={confirmPassword}
               onChange={(e) => setConfirmpassword(e.target.value)}
             ></input>
+            <p className="usrName">{errorMessage}</p>
             <button className="btn" onClick={registerUser}>
               Create Account
             </button>

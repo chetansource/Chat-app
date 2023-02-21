@@ -63,7 +63,8 @@ export async function insertMessage(msg) {
 }
 
 //get the contact list which i have connected to
-export async function getUsers(id) {
+export async function getContacts(id) {
+  //rename getcontacts
   const query = `SELECT user_name FROM users 
   INNER JOIN( 
   SELECT userid FROM contacts  WHERE connected_id=$1
@@ -82,7 +83,7 @@ export async function getUserMessages(sender_id, receiver_id) {
   const query = `SELECT message, message_time from messages WHERE sender_id = $1 AND receiver_id = $2 
     UNION 
     SELECT message, message_time from messages WHERE sender_id = $2 AND receiver_id = $1`
-  const params = [sender_id, receiver_id] // i am just retriving the messages which 1 sent to 2 not the messages which are 2 sent to  1.
+  const params = [sender_id, receiver_id]
   const res = await pool.query(query, params)
   console.log('messages>>', res.rows)
   return res.rows

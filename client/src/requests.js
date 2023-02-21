@@ -17,7 +17,7 @@ export async function userSignup(name, passwd, repwd) {
     const url = globalUrl + '/users/signup'
     const response = await fetch(url, config)
     if (!response.ok) {
-      throw new Error(`http error status:${response.status}`)
+      return response.json()
     }
     const data = await response.json()
     return data
