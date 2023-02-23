@@ -4,15 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import ChatBox from './ChatBox'
 import ConnectBox from './ConnectBox'
 
-function ChatPage({ socket }) {
+function ChatPage({ socket, username }) {
   const navigate = useNavigate()
   const [userList, setUserList] = useState([])
   const [focusedUser, setFocusedUser] = useState('')
 
-  console.log('userlist>>', userList)
-
   useEffect(() => {
-    socket.on('newUserResponse', (data) => {
+    socket.on('connectedList', (data) => {
       const User = localStorage.getItem('UserName')
       const usernames = Object.keys(data)
       const users = usernames.filter((user) => user !== User)
@@ -24,14 +22,12 @@ function ChatPage({ socket }) {
     navigate('/')
   }
 
-  const userName = localStorage.getItem('UserName')
-
   return (
     <div className="container1">
       <div className="header">
         <label className="label">LinkUp</label>
         <div className="showLoginName">
-          <label className="loginName">{userName}</label>
+          <label className="loginName">{username}</label>
         </div>
         <button className="navbtn" onClick={goBack}>
           Logout
@@ -50,7 +46,7 @@ function ChatPage({ socket }) {
             ))}
           </ol>
         </div>
-        <ChatBox socket={socket} selectedUser={focusedUser} />
+        <ChatBox socket={socket} selectedUser={focusedUser} user={username} />
         <ConnectBox />
       </div>
     </div>

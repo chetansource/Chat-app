@@ -40,7 +40,7 @@ export async function loginUser(name, passwd) {
     const response = await fetch(url, config)
     const status = response.status
     if (status === 200) {
-      return response.status
+      return [response.status, await response.json()]
     } else {
       return await response.json()
     }

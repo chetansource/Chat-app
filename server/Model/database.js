@@ -53,6 +53,14 @@ export async function userSession(Sessionid, Userid) {
   return res
 }
 
+//get user Ids
+export async function userIds(senderName, receiverName) {
+  const query = `SELECT user_id,user_name from users WHERE user_name=$1 OR user_name=$2`
+  const params = [senderName, receiverName]
+  const res = await pool.query(query, params)
+  return res.rows
+}
+
 //send message to a frd
 export async function insertMessage(msg) {
   const query = 'INSERT INTO messages(message,sender_id,receiver_id) VALUES($1,$2,$3)'
@@ -62,9 +70,8 @@ export async function insertMessage(msg) {
   return res
 }
 
-//get the contact list which i have connected to
+//get the contact list which user have connected to
 export async function getContacts(id) {
-  //rename getcontacts
   const query = `SELECT user_name FROM users 
   INNER JOIN( 
   SELECT userid FROM contacts  WHERE connected_id=$1

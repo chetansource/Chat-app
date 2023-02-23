@@ -32,6 +32,7 @@ export async function registerUser(req, res) {
 export async function loginUser(req, res) {
   try {
     const user = await userDetails(req.body.userName)
+    console.log(user)
     if (user[0] === undefined) {
       return res.status(404).json({ message: 'user doesnt exists' }) //bad request
     }
@@ -39,7 +40,11 @@ export async function loginUser(req, res) {
       if (result === true) {
         const sessionId = uuidv4()
         await userSession(sessionId, user[0].user_id)
-        res.cookie('session', sessionId, { httpOnly: true }).sendStatus(200)
+        // const jsonValue = JSON.stringify({ loginToken: sessionId, username: user[0].user_name })
+        res
+          .cookie('session', sessionId, { expires: new Date(Date.now() + 3600000), httpOnly: true })
+          .status(200)
+          .json({ username: user[0].user_name })
       } else {
         res.status(401).json({ message: 'Invalid Credentials' })
       }

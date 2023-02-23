@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './ChatBox.css'
 
-function ChatBox({ socket, selectedUser }) {
-  console.log('chat with user>>', socket.id)
+function ChatBox({ socket, selectedUser, user }) {
+  // console.log('chat with user>>', socket.id)
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
 
@@ -11,7 +11,8 @@ function ChatBox({ socket, selectedUser }) {
     textList.push(text.trim())
     socket.emit('chat-message', {
       message: text,
-      name: selectedUser,
+      receiver_name: selectedUser,
+      sender_name: user,
     })
     setText('')
   }

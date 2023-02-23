@@ -3,33 +3,33 @@ import './LoginPage.css'
 import { useNavigate } from 'react-router-dom'
 import { loginUser } from '../requests.js'
 
-function LoginPage({ socket }) {
+function LoginPage({ socket, userName, setUserName }) {
   const navigate = useNavigate()
-  const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+  console.log('loginpage>>', userName)
 
   async function LoginUser() {
     if (userName.trim().length === 0) return
-    setUserName('')
     if (password.trim().length < 6) {
       return [setErrorMessage('password needs atleast 6 characters'), setPassword('')]
     }
     setPassword('')
 
-    localStorage.setItem('UserName', userName)
-    socket.emit('newuser', userName, socket.id)
+    // localStorage.setItem('UserName', userName)
+
+    // socket.emit('newuser', userName, socket.id)
 
     const loginData = await loginUser(userName, password)
-    console.log('>>>>', loginData)
     userErrors(loginData)
   }
+
   function userErrors(data) {
     if (data.message === 'user doesnt exists') {
       setErrorMessage('please enter correct user name')
     } else if (data.message === 'Invalid Credentials') {
       setErrorMessage('Incorrect password')
-    } else if (data === 200) {
+    } else if (data[0] === 200) {
       navigate('/chatpage')
     }
   }
