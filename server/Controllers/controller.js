@@ -1,7 +1,6 @@
 import {
   insertUser,
   insertMessage,
-  getContacts,
   getUserMessages,
   userNameAvailable,
   userDetails,
@@ -32,7 +31,7 @@ export async function registerUser(req, res) {
 export async function loginUser(req, res) {
   try {
     const user = await userDetails(req.body.userName)
-    console.log(user)
+
     if (user[0] === undefined) {
       return res.status(404).json({ message: 'user doesnt exists' }) //bad request
     }
@@ -54,10 +53,10 @@ export async function loginUser(req, res) {
   }
 }
 
-export async function getUserContacts(req, res) {
+export async function userDetail(req, res) {
   try {
-    const users = await getContacts(req.params.userId)
-    res.json(users)
+    const user = await getUser(req.params.id)
+    res.json(user)
   } catch (error) {
     res.sendStatus(500)
   }

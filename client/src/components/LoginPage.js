@@ -16,10 +16,6 @@ function LoginPage({ socket, userName, setUserName }) {
     }
     setPassword('')
 
-    // localStorage.setItem('UserName', userName)
-
-    // socket.emit('newuser', userName, socket.id)
-
     const loginData = await loginUser(userName, password)
     userErrors(loginData)
   }

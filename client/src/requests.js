@@ -48,3 +48,13 @@ export async function loginUser(name, passwd) {
     console.log(error)
   }
 }
+
+export async function getUserName(id) {
+  try {
+    const url = globalUrl + `/users/${id}`
+    const response = await fetch(url)
+    console.log(response.json())
+  } catch (error) {
+    console.log(error)
+  }
+}

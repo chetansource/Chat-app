@@ -60,6 +60,13 @@ export async function userIds(senderName, receiverName) {
   const res = await pool.query(query, params)
   return res.rows
 }
+//getting userId from sessionId
+export async function userId(sessionId) {
+  const query = `SELECT user_id from sessions WHERE session_id=$1`
+  const params = [sessionId]
+  const res = await pool.query(query, params)
+  return res.rows
+}
 
 //send message to a frd
 export async function insertMessage(msg, senderId, receiverId) {
@@ -81,7 +88,7 @@ export async function getContacts(id) {
   ON users.user_id = u.userid`
   const params = [id]
   const res = await pool.query(query, params)
-  console.log('array>>', res.rows)
+  // console.log('array>>', res.rows)
   return res.rows
 }
 
@@ -92,6 +99,6 @@ export async function getUserMessages(sender_id, receiver_id) {
     SELECT message, message_time from messages WHERE sender_id = $2 AND receiver_id = $1`
   const params = [sender_id, receiver_id]
   const res = await pool.query(query, params)
-  console.log('messages>>', res.rows)
+  // console.log('messages>>', res.rows)
   return res.rows
 }

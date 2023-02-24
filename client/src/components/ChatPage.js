@@ -3,25 +3,30 @@ import './ChatPage.css'
 import { useNavigate } from 'react-router-dom'
 import ChatBox from './ChatBox'
 import ConnectBox from './ConnectBox'
+import { getUserName } from '../requests.js'
 
 function ChatPage({ socket, username }) {
   const navigate = useNavigate()
   const [userList, setUserList] = useState([])
   const [focusedUser, setFocusedUser] = useState('')
+  // username = getUserName()
 
   useEffect(() => {
     socket.connect()
+
+    socket.on('userId', (userid) => {
+      getUserName(userid)
+    })
+
     socket.on('connectedList', (data) => {
-      const User = localStorage.getItem('UserName')
-      const usernames = Object.keys(data)
-      const users = usernames.filter((user) => user !== User)
+      const users = data.map((user) => user.user_name)
       setUserList(users)
     })
 
     return () => {
       socket.off('connectedList')
     }
-  }, [socket, userList])
+  }, [socket])
 
   function goBack() {
     navigate('/')
