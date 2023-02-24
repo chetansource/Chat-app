@@ -10,12 +10,17 @@ function ChatPage({ socket, username }) {
   const [focusedUser, setFocusedUser] = useState('')
 
   useEffect(() => {
+    socket.connect()
     socket.on('connectedList', (data) => {
       const User = localStorage.getItem('UserName')
       const usernames = Object.keys(data)
       const users = usernames.filter((user) => user !== User)
       setUserList(users)
     })
+
+    return () => {
+      socket.off('connectedList')
+    }
   }, [socket, userList])
 
   function goBack() {

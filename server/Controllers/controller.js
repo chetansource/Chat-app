@@ -40,7 +40,6 @@ export async function loginUser(req, res) {
       if (result === true) {
         const sessionId = uuidv4()
         await userSession(sessionId, user[0].user_id)
-        // const jsonValue = JSON.stringify({ loginToken: sessionId, username: user[0].user_name })
         res
           .cookie('session', sessionId, { expires: new Date(Date.now() + 3600000), httpOnly: true })
           .status(200)

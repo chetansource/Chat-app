@@ -1,11 +1,30 @@
 import { Server } from 'socket.io'
 import { insertMessage, userIds } from '../Model/database.js'
+import cookie from 'cookie'
 
 export function socketConnection(httpServer) {
-  const io = new Server(httpServer, { cors: { origin: ['http://localhost:3000'] }, cookie: true })
+  const io = new Server(httpServer, {
+    cors: { origin: ['http://localhost:3000'] },
+    cookie: true,
+    httpOnly: true,
+  })
 
   // let users = {}
   // console.log('users obj>>', users)
+
+  //middleware
+
+  io.use((socket, next) => {
+    try {
+      // const sessionid = socket.request.headers
+      const sessionid = socket.handshake.headers.cookie
+
+      console.log('', sessionid)
+      next()
+    } catch (error) {
+      return next(new Error('Not authorized'))
+    }
+  })
 
   let userCount = 0
   io.on('connection', (socket) => {
@@ -24,10 +43,13 @@ export function socketConnection(httpServer) {
       io.to(receiverId).emit('message', newMessage)
     })
 
-    adding the new user
-    socket.on('newuser', (name, id) => {
-      users[name] = id
-      io.emit('newUserResponse', users)
-    })
+    //retriving the friends list
+    socket.on('connectedList', () => {})
+    // adding the new user
+    // socket.on('newuser', (name, id) => {
+
+    //   users[name] = id
+    //   io.emit('newUserResponse', users)
+    // })
   })
 }
