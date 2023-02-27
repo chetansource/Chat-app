@@ -53,7 +53,8 @@ export async function getUserName(id) {
   try {
     const url = globalUrl + `/users/${id}`
     const response = await fetch(url)
-    console.log(response.json())
+    const data = await response.json()
+    return data
   } catch (error) {
     console.log(error)
   }

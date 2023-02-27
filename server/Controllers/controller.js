@@ -5,6 +5,7 @@ import {
   userNameAvailable,
   userDetails,
   userSession,
+  getUser,
 } from '../Model/database.js'
 import bcrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid'
@@ -33,7 +34,7 @@ export async function loginUser(req, res) {
     const user = await userDetails(req.body.userName)
 
     if (user[0] === undefined) {
-      return res.status(404).json({ message: 'user doesnt exists' }) //bad request
+      return res.status(404).json({ message: 'user doesnt exist' }) //bad request
     }
     bcrypt.compare(req.body.password, user[0].password, async function (error, result) {
       if (result === true) {

@@ -5,17 +5,19 @@ import ChatBox from './ChatBox'
 import ConnectBox from './ConnectBox'
 import { getUserName } from '../requests.js'
 
-function ChatPage({ socket, username }) {
+function ChatPage({ socket }) {
   const navigate = useNavigate()
+  const [userName, setUserName] = useState('')
   const [userList, setUserList] = useState([])
   const [focusedUser, setFocusedUser] = useState('')
-  // username = getUserName()
 
   useEffect(() => {
     socket.connect()
 
-    socket.on('userId', (userid) => {
-      getUserName(userid)
+    socket.on('userId', async (userid) => {
+      const name = await getUserName(userid)
+      const username = name[0].user_name
+      setUserName(username)
     })
 
     socket.on('connectedList', (data) => {
@@ -37,7 +39,7 @@ function ChatPage({ socket, username }) {
       <div className="header">
         <label className="label">LinkUp</label>
         <div className="showLoginName">
-          <label className="loginName">{username}</label>
+          <label className="loginName">{userName}</label>
         </div>
         <button className="navbtn" onClick={goBack}>
           Logout
@@ -56,7 +58,7 @@ function ChatPage({ socket, username }) {
             ))}
           </ol>
         </div>
-        <ChatBox socket={socket} selectedUser={focusedUser} user={username} />
+        <ChatBox socket={socket} selectedUser={focusedUser} user={userName} />
         <ConnectBox />
       </div>
     </div>

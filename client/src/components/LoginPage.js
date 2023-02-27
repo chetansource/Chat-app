@@ -3,8 +3,9 @@ import './LoginPage.css'
 import { useNavigate } from 'react-router-dom'
 import { loginUser } from '../requests.js'
 
-function LoginPage({ socket, userName, setUserName }) {
+function LoginPage() {
   const navigate = useNavigate()
+  const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   console.log('loginpage>>', userName)
@@ -21,7 +22,7 @@ function LoginPage({ socket, userName, setUserName }) {
   }
 
   function userErrors(data) {
-    if (data.message === 'user doesnt exists') {
+    if (data.message === 'user doesnt exist') {
       setErrorMessage('please enter correct user name')
     } else if (data.message === 'Invalid Credentials') {
       setErrorMessage('Incorrect password')
@@ -29,14 +30,14 @@ function LoginPage({ socket, userName, setUserName }) {
       navigate('/chatpage')
     }
   }
-  function routeChange() {
+  function signupRoute() {
     navigate('/signup')
   }
 
   return (
     <div className="loginpage">
       <div className="loginbar">
-        <button className="barelement" onClick={routeChange}>
+        <button className="barelement" onClick={signupRoute}>
           signup
         </button>
       </div>

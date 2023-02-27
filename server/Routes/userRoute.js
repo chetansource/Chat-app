@@ -5,4 +5,4 @@ export const router = express.Router()
 
 router.post('/signup', registerUser) //usersignup
 router.post('/login', loginUser)
-router.get('/id', userDetail)
+router.get('/:id', userDetail)
