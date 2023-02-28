@@ -14,6 +14,7 @@ function ChatPage({ socket }) {
   useEffect(() => {
     socket.connect()
 
+    //fetching the userName
     socket.on('userId', async (userid) => {
       const name = await getUserName(userid)
       const username = name[0].user_name
@@ -21,8 +22,12 @@ function ChatPage({ socket }) {
     })
 
     socket.on('connectedList', (data) => {
-      const users = data.map((user) => user.user_name)
-      setUserList(users)
+      console.log('>>', data)
+      if (Array.isArray(data)) {
+        const users = data.map((user) => user.user_name)
+        setUserList(users)
+        setFocusedUser(users[0])
+      }
     })
 
     return () => {
@@ -58,8 +63,8 @@ function ChatPage({ socket }) {
             ))}
           </ol>
         </div>
-        <ChatBox socket={socket} selectedUser={focusedUser} user={userName} />
-        <ConnectBox />
+        <ChatBox socket={socket} selectedUser={focusedUser} />
+        <ConnectBox socket={socket} />
       </div>
     </div>
   )

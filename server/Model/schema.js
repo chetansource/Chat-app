@@ -25,6 +25,7 @@ const contacts = `CREATE TABLE contacts(
 const sessions = `CREATE TABLE sessions(
     session_id VARCHAR UNIQUE NOT NULL,
     user_id integer NOT NULL,
+    socket_id VARCHAR UNIQUE ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_user_id FOREIGN KEY(user_id) REFERENCES users(user_id)
 );`

@@ -1,5 +1,13 @@
 import { Server } from 'socket.io'
-import { insertMessage, userIds, userId, getContacts } from '../Model/database.js'
+import {
+  insertMessage,
+  userIds,
+  userId,
+  getContacts,
+  insertSocketId,
+  getUserMessages,
+  userNameAvailable,
+} from '../Model/database.js'
 
 export function socketConnection(httpServer) {
   const io = new Server(httpServer, {
@@ -7,11 +15,13 @@ export function socketConnection(httpServer) {
     cookie: true,
     httpOnly: true,
   })
+
   //middleware
 
   io.use(async (socket, next) => {
     try {
       const cookiee = socket.handshake.headers.cookie.split('=')[1]
+      await insertSocketId(socket.id, cookiee)
       const user = await userId(cookiee)
       socket.userId = user[0].user_id
       next()
@@ -23,7 +33,7 @@ export function socketConnection(httpServer) {
   let userCount = 0
   io.on('connection', async (socket) => {
     userCount += 1
-    console.log('Total users connected', userCount) //get the token
+    console.log('Total users connected', userCount, socket.id) //get the token
 
     //send userid
     socket.emit('userId', socket.userId)
@@ -32,16 +42,32 @@ export function socketConnection(httpServer) {
     const data = await getContacts(socket.userId)
     socket.emit('connectedList', data)
 
+    //retriving the past messages
+    socket.on('previous-msg', async (args) => {
+      if (args.receiver_name.length > 0) {
+        const data = await userIds(args.receiver_name)
+        const receiverId = data[0].user_id
+        const messages = await getUserMessages(socket.userId, receiverId)
+        socket.emit('message', messages)
+      }
+    })
+
     // receiving the message from one user and sending to another
     socket.on('chat-message', async (args) => {
-      // console.log('args>>', args)
-      const data = await userIds(args.receiver_name, args.sender_name)
+      const data = await userIds(args.receiver_name)
       const receiverId = data[0].user_id
-      const senderId = data[1].user_id
       let newMessage = args.message
-      console.log(newMessage, senderId, receiverId)
-      await insertMessage(newMessage, senderId, receiverId)
+      await insertMessage(newMessage, socket.userId, receiverId)
       io.to(receiverId).emit('message', newMessage)
+    })
+
+    //adding friend to friendsList
+    socket.on('adding_frd', async (args) => {
+      // console.log('>>', args)
+      const friend_name = await userNameAvailable(args)
+      if (friend_name === 'Available') {
+        socket.emit('connectedList', 'user not available in the app')
+      }
     })
   })
 }

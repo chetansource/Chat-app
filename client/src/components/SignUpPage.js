@@ -13,24 +13,14 @@ function SignUpPage() {
     if (username.trim().length === 0) return
     setUsername('')
     if (passWord.trim().length < 6) {
-      return [
-        setErrorMessage('password needs atleast 6 characters'),
-        setPassWord(''),
-      ]
+      return [setErrorMessage('password needs atleast 6 characters'), setPassWord('')]
     }
     setPassWord('')
     if (confirmPassword.trim().length < 6) {
-      return [
-        setErrorMessage('password needs atleast 6 characters'),
-        setConfirmpassword(''),
-      ]
+      return [setErrorMessage('password needs atleast 6 characters'), setConfirmpassword('')]
     }
     setConfirmpassword('')
-    const data = await userSignup(
-      username.trim(),
-      passWord.trim(),
-      confirmPassword.trim()
-    )
+    const data = await userSignup(username.trim(), passWord.trim(), confirmPassword.trim())
     if (data.message === 'username already exist') {
       setErrorMessage('choose different user name')
     } else if (data.message === 'Invalid Credentials') {
@@ -61,7 +51,7 @@ function SignUpPage() {
               placeholder="Enter username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-            ></input>
+            />
             <label className="">Password</label>
             <input
               type="password"
@@ -69,7 +59,7 @@ function SignUpPage() {
               placeholder="enter password"
               value={passWord}
               onChange={(e) => setPassWord(e.target.value)}
-            ></input>
+            />
             <label>Confirm Password</label>
             <input
               type="password"
@@ -77,7 +67,7 @@ function SignUpPage() {
               placeholder="confirm password"
               value={confirmPassword}
               onChange={(e) => setConfirmpassword(e.target.value)}
-            ></input>
+            />
             <p className="usrName">{errorMessage}</p>
             <button className="btn" onClick={registerUser}>
               Create Account

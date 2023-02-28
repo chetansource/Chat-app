@@ -1,6 +1,5 @@
 import {
   insertUser,
-  insertMessage,
   getUserMessages,
   userNameAvailable,
   userDetails,
@@ -58,15 +57,6 @@ export async function userDetail(req, res) {
   try {
     const user = await getUser(req.params.id)
     res.json(user)
-  } catch (error) {
-    res.sendStatus(500)
-  }
-}
-
-export async function sendMessage(req, res) {
-  try {
-    const message = await insertMessage(req.params.id, req.body)
-    res.sendStatus(201)
   } catch (error) {
     res.sendStatus(500)
   }

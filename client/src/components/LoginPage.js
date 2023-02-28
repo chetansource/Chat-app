@@ -8,7 +8,6 @@ function LoginPage() {
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
-  console.log('loginpage>>', userName)
 
   async function LoginUser() {
     if (userName.trim().length === 0) return

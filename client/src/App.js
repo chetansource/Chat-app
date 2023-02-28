@@ -5,12 +5,10 @@ import ChatPage from './components/ChatPage'
 import LoginPage from './components/LoginPage'
 import { io } from 'socket.io-client'
 import SignUpPage from './components/SignUpPage'
-// import { useState } from 'react'
 
 const socket = io('http://localhost:3001', { autoConnect: false, transports: ['websocket'] })
 
 function App() {
-  // const [userName, setUserName] = useState('')
   return (
     <Router>
       <div className="App">

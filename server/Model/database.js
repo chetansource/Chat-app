@@ -54,9 +54,9 @@ export async function userSession(Sessionid, Userid) {
 }
 
 //get user Ids
-export async function userIds(senderName, receiverName) {
-  const query = `SELECT user_id,user_name from users WHERE user_name=$1 OR user_name=$2`
-  const params = [senderName, receiverName]
+export async function userIds(receiverName) {
+  const query = `SELECT user_id,user_name from users WHERE user_name=$1`
+  const params = [receiverName]
   const res = await pool.query(query, params)
   return res.rows
 }
@@ -67,6 +67,15 @@ export async function userId(sessionId) {
   const res = await pool.query(query, params)
   return res.rows
 }
+
+//insert socketId
+export async function insertSocketId(socketid, sessionid) {
+  const query = `UPDATE sessions SET socket_id=$1 WHERE session_id=$2`
+  const params = [socketid, sessionid]
+  const res = await pool.query(query, params)
+  return res
+}
+
 //getting userName
 export async function getUser(id) {
   const query = `SELECT user_name from users WHERE user_id=$1`
@@ -74,14 +83,12 @@ export async function getUser(id) {
   const res = await pool.query(query, params)
   return res.rows
 }
-// getUser('23')
 
 //send message to a frd
 export async function insertMessage(msg, senderId, receiverId) {
   const query = 'INSERT INTO messages(message,sender_id,receiver_id) VALUES($1,$2,$3)'
   const params = [msg, senderId, receiverId]
   const res = await pool.query(query, params)
-  console.log('message>>', res)
   return res
 }
 
