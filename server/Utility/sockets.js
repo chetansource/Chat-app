@@ -7,6 +7,8 @@ import {
   insertSocketId,
   getUserMessages,
   userNameAvailable,
+  userDetails,
+  insertContactList,
 } from '../Model/database.js'
 
 export function socketConnection(httpServer) {
@@ -64,10 +66,16 @@ export function socketConnection(httpServer) {
     //adding friend to friendsList
     socket.on('adding_frd', async (args) => {
       // console.log('>>', args)
-      const friend_name = await userNameAvailable(args)
-      if (friend_name === 'Available') {
+      const friendAvailable = await userNameAvailable(args)
+      if (friendAvailable === 'Available') {
         socket.emit('connectedList', 'user not available in the app')
       }
+      // const friendName = await userDetails(args)
+      const data = await userIds(args)
+      const receiverId = data[0].user_id
+      await insertContactList(socket.userId, receiverId)
+      // console.log('----', friendName)
+      // socket.emit('connectedList', friendName)
     })
   })
 }

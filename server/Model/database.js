@@ -92,6 +92,14 @@ export async function insertMessage(msg, senderId, receiverId) {
   return res
 }
 
+//insert into contactList
+export async function insertContactList(senderId, receiverId) {
+  const query = 'INSERT INTO contacts(senderId,receiverId) VALUES($1,$2)'
+  const params = [senderId, receiverId]
+  const res = await pool.query(query, params)
+  return res
+}
+
 //get the contact list which user have connected to
 export async function getContacts(id) {
   const query = `SELECT user_name FROM users 

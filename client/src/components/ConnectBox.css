@@ -22,3 +22,7 @@
 .addbtn:hover{
     background: rgb(169, 250, 64);
 }
+.errMsg{
+    color: crimson;
+    font-size: 13px;
+}

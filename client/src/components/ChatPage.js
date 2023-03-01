@@ -22,18 +22,20 @@ function ChatPage({ socket }) {
     })
 
     socket.on('connectedList', (data) => {
-      console.log('>>', data)
+      console.log('>>>', data)
+
       if (Array.isArray(data)) {
         const users = data.map((user) => user.user_name)
-        setUserList(users)
+        setUserList([...userList, ...users])
         setFocusedUser(users[0])
       }
     })
 
+    console.log('>>', userList)
     return () => {
       socket.off('connectedList')
     }
-  }, [socket])
+  }, [socket, userList])
 
   function goBack() {
     navigate('/')

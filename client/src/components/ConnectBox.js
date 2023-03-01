@@ -1,13 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './ConnectBox.css'
 
 function ConnectBox({ socket }) {
   const [userName, setUserName] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   function addFriend() {
     setUserName('')
     socket.emit('adding_frd', userName)
   }
+
+  useEffect(() => {
+    socket.on('connectedList', (data) => {
+      if ((typeof data === 'string') & (data === 'user not available in the app')) {
+        setErrorMessage(data)
+      }
+    })
+  })
   return (
     <div>
       <div className="connectBar">
@@ -22,6 +31,7 @@ function ConnectBox({ socket }) {
           <button className="addbtn" onClick={addFriend}>
             ADD
           </button>
+          <p className="errMsg">{errorMessage}</p>
         </form>
       </div>
     </div>
