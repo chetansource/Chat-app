@@ -76,6 +76,14 @@ export async function insertSocketId(socketid, sessionid) {
   return res
 }
 
+//getting socketId
+export async function getSocketId(userId) {
+  const query = `SELECT socket_id from sessions WHERE user_id=$1 ORDER BY created_at DESC LIMIT 1`
+  const params = [userId]
+  const res = await pool.query(query, params)
+  return res.rows
+}
+
 //getting userName
 export async function getUser(id) {
   const query = `SELECT user_name from users WHERE user_id=$1`
@@ -94,7 +102,7 @@ export async function insertMessage(msg, senderId, receiverId) {
 
 //insert into contactList
 export async function insertContactList(senderId, receiverId) {
-  const query = 'INSERT INTO contacts(senderId,receiverId) VALUES($1,$2)'
+  const query = 'INSERT INTO contacts(userid,connected_id) VALUES($1,$2)'
   const params = [senderId, receiverId]
   const res = await pool.query(query, params)
   return res
@@ -118,7 +126,7 @@ export async function getContacts(id) {
 export async function getUserMessages(sender_id, receiver_id) {
   const query = `SELECT message, message_time from messages WHERE sender_id = $1 AND receiver_id = $2 
     UNION 
-    SELECT message, message_time from messages WHERE sender_id = $2 AND receiver_id = $1`
+    SELECT message, message_time from messages WHERE sender_id = $2 AND receiver_id = $1 ORDER BY message_time`
   const params = [sender_id, receiver_id]
   const res = await pool.query(query, params)
   return res.rows

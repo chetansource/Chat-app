@@ -8,6 +8,8 @@ function ChatBox({ socket, selectedUser }) {
   function addText() {
     if (text.trim() === '') return
     textList.push(text.trim())
+    setTextList([...textList, { message: text.trim() }])
+    console.log('>>', textList)
     socket.emit('chat-message', {
       message: text,
       receiver_name: selectedUser,
@@ -18,8 +20,8 @@ function ChatBox({ socket, selectedUser }) {
   useEffect(() => {
     socket.on('message', (args) => {
       setTextList([...textList, ...args])
+      console.log('>>>2', textList)
     })
-    console.log('array', textList)
     return () => {
       socket.off('message')
     }

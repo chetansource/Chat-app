@@ -9,6 +9,7 @@ import {
   userNameAvailable,
   userDetails,
   insertContactList,
+  getSocketId,
 } from '../Model/database.js'
 
 export function socketConnection(httpServer) {
@@ -46,7 +47,7 @@ export function socketConnection(httpServer) {
 
     //retriving the past messages
     socket.on('previous-msg', async (args) => {
-      if (args.receiver_name.length > 0) {
+      if (args.receiver_name.length > 0 || args.length > 0) {
         const data = await userIds(args.receiver_name)
         const receiverId = data[0].user_id
         const messages = await getUserMessages(socket.userId, receiverId)
@@ -58,24 +59,31 @@ export function socketConnection(httpServer) {
     socket.on('chat-message', async (args) => {
       const data = await userIds(args.receiver_name)
       const receiverId = data[0].user_id
+      const socketId = await getSocketId(receiverId)
       let newMessage = args.message
       await insertMessage(newMessage, socket.userId, receiverId)
-      io.to(receiverId).emit('message', newMessage)
+      io.to(socketId[0].socket_id).emit('message', [{ message: newMessage }])
+
+      // const messages = await getUserMessages(socket.userId, receiverId)
+      // console.log('>>', messages)
+      // socket.emit('message', messages)
     })
 
     //adding friend to friendsList
     socket.on('adding_frd', async (args) => {
-      // console.log('>>', args)
       const friendAvailable = await userNameAvailable(args)
       if (friendAvailable === 'Available') {
         socket.emit('connectedList', 'user not available in the app')
       }
-      // const friendName = await userDetails(args)
+
       const data = await userIds(args)
-      const receiverId = data[0].user_id
-      await insertContactList(socket.userId, receiverId)
-      // console.log('----', friendName)
-      // socket.emit('connectedList', friendName)
+
+      if (data.length > 0) {
+        const receiverId = data[0].user_id
+        await insertContactList(socket.userId, receiverId)
+        const friendName = await userDetails(args)
+        socket.emit('connectedList', friendName)
+      }
     })
   })
 }

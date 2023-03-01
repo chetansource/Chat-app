@@ -52,9 +52,12 @@
     text-align:left;
     width:200px;
     height: 30px;
-    background: rgb(89, 170, 246);
-    border-left: none;
-    border-top: none;
+    background: rgb(85, 140, 192);
+   border-style: groove;
+   border-color: black;
+}
+.userlist:hover{
+    cursor: pointer;
 }
 .orderedList{
     padding-left: 0px;
