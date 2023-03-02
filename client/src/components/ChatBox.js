@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './ChatBox.css'
 
 function ChatBox({ socket, selectedUser }) {
+  const [userId, setUserId] = useState(0)
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
 
@@ -9,7 +10,6 @@ function ChatBox({ socket, selectedUser }) {
     if (text.trim() === '') return
     textList.push(text.trim())
     setTextList([...textList, { message: text.trim() }])
-    console.log('>>', textList)
     socket.emit('chat-message', {
       message: text,
       receiver_name: selectedUser,
@@ -18,10 +18,14 @@ function ChatBox({ socket, selectedUser }) {
   }
 
   useEffect(() => {
+    socket.on('userId', (userid) => {
+      setUserId(userid)
+    })
+
     socket.on('message', (args) => {
       setTextList([...textList, ...args])
-      console.log('>>>2', textList)
     })
+
     return () => {
       socket.off('message')
     }
@@ -38,13 +42,21 @@ function ChatBox({ socket, selectedUser }) {
         <div className="displaySenderName">
           <input className="senderName" value={selectedUser} readOnly></input>
         </div>
-        <ol>
-          {textList.map((data, index) => (
-            <div className="acceptMessage" key={index}>
-              {data.message}
-            </div>
-          ))}
-        </ol>
+        <div className="container3">
+          <ol className="listdis">
+            {textList.map((data, index) =>
+              data.sender_id === userId ? (
+                <div className="sendMessage" key={index}>
+                  {data.message}
+                </div>
+              ) : (
+                <div className="acceptMessage" key={index}>
+                  {data.message}
+                </div>
+              )
+            )}
+          </ol>
+        </div>
       </div>
       <div className="chatfooter">
         <form className="form " onSubmit={(e) => e.preventDefault()}>

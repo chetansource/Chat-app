@@ -124,9 +124,9 @@ export async function getContacts(id) {
 
 //get the messages of a particular friend when  clicked on him.
 export async function getUserMessages(sender_id, receiver_id) {
-  const query = `SELECT message, message_time from messages WHERE sender_id = $1 AND receiver_id = $2 
+  const query = `SELECT * from messages WHERE sender_id = $1 AND receiver_id = $2 
     UNION 
-    SELECT message, message_time from messages WHERE sender_id = $2 AND receiver_id = $1 ORDER BY message_time`
+    SELECT * from messages WHERE sender_id = $2 AND receiver_id = $1 ORDER BY message_time`
   const params = [sender_id, receiver_id]
   const res = await pool.query(query, params)
   return res.rows

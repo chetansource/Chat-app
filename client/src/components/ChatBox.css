@@ -3,7 +3,6 @@
     width: 507px;
     display: flex;
     flex-direction: column;
-    text-align: right;
     background: rgb(183, 201, 231);
 }
 
@@ -22,6 +21,35 @@
     width: 500px;
     height: 30px;
     font-size: 16px;
-    background: rgba(222, 231, 210, 0.945);
+    background: rgba(67, 150, 209);
+}
+.acceptMessage{
+    display: flex;
+    border-bottom: groove;
+    width: fit-content;
+    margin-left: 1rem;
+    border-radius: 10%;
+    padding: 0.2rem 1rem 0.2rem 1rem;
+    background: rgb(153, 180, 248);
+}
+.sendMessage{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    border-bottom: groove;
+    margin-left: auto;
+    width: fit-content;
+    margin-right: 1rem; 
+    border-radius: 10%;
+    padding: 0.2rem 1rem 0.2rem 1rem;  
+    background: rgb(180, 160, 242);
 }
 
+.listdis{
+    padding-left: 0px;
+    width: 100%;
+}
+ .container3{
+    display: flex;
+    width: 100%;
+}  

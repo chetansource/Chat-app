@@ -63,10 +63,6 @@ export function socketConnection(httpServer) {
       let newMessage = args.message
       await insertMessage(newMessage, socket.userId, receiverId)
       io.to(socketId[0].socket_id).emit('message', [{ message: newMessage }])
-
-      // const messages = await getUserMessages(socket.userId, receiverId)
-      // console.log('>>', messages)
-      // socket.emit('message', messages)
     })
 
     //adding friend to friendsList
