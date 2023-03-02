@@ -131,3 +131,10 @@ export async function getUserMessages(sender_id, receiver_id) {
   const res = await pool.query(query, params)
   return res.rows
 }
+
+// deleting session id
+export async function deleteSession(userId) {
+  const query = `Delete from sessions where user_id=$1`
+  const params = [userId]
+  await pool.query(query, params)
+}

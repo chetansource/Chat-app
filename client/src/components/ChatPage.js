@@ -7,6 +7,7 @@ import { getUserName } from '../requests.js'
 
 function ChatPage({ socket }) {
   const navigate = useNavigate()
+  const [userId, setUserId] = useState('')
   const [userName, setUserName] = useState('')
   const [userList, setUserList] = useState([])
   const [focusedUser, setFocusedUser] = useState('')
@@ -16,6 +17,7 @@ function ChatPage({ socket }) {
 
     //fetching the userName
     socket.on('userId', async (userid) => {
+      setUserId(userid)
       const name = await getUserName(userid)
       const username = name[0].user_name
       setUserName(username)
@@ -33,7 +35,8 @@ function ChatPage({ socket }) {
     }
   }, [socket, userList])
 
-  function goBack() {
+  function navLogin() {
+    socket.emit('logout', userId)
     navigate('/')
   }
 
@@ -44,7 +47,7 @@ function ChatPage({ socket }) {
         <div className="showLoginName">
           <label className="loginName">{userName}</label>
         </div>
-        <button className="navbtn" onClick={goBack}>
+        <button className="navbtn" onClick={navLogin}>
           Logout
         </button>
       </div>

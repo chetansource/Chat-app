@@ -10,6 +10,7 @@ import {
   userDetails,
   insertContactList,
   getSocketId,
+  deleteSession,
 } from '../Model/database.js'
 
 export function socketConnection(httpServer) {
@@ -36,7 +37,7 @@ export function socketConnection(httpServer) {
   let userCount = 0
   io.on('connection', async (socket) => {
     userCount += 1
-    console.log('Total users connected', userCount, socket.id) //get the token
+    console.log('Total users connected', userCount) //get the token
 
     //send userid
     socket.emit('userId', socket.userId)
@@ -80,6 +81,12 @@ export function socketConnection(httpServer) {
         const friendName = await userDetails(args)
         socket.emit('connectedList', friendName)
       }
+    })
+
+    socket.on('logout', async (userid) => {
+      console.log('>>', userid)
+      await deleteSession(userid)
+      userCount -= 1
     })
   })
 }
