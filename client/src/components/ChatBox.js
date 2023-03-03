@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './ChatBox.css'
 
-function ChatBox({ socket, selectedUser }) {
+function ChatBox({ socket, selectedUser, userid }) {
   const [userId, setUserId] = useState(0)
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
@@ -9,7 +9,7 @@ function ChatBox({ socket, selectedUser }) {
   function addText() {
     if (text.trim() === '') return
     textList.push(text.trim())
-    setTextList([...textList, { message: text.trim() }])
+    setTextList([...textList, { message: text.trim(), sender_id: userid }])
     socket.emit('chat-message', {
       message: text,
       receiver_name: selectedUser,
@@ -46,13 +46,15 @@ function ChatBox({ socket, selectedUser }) {
           <ol className="listdis">
             {textList.map((data, index) =>
               data.sender_id === userId ? (
-                <div className="sendMessage" key={index}>
+                <span className="sendMessage" key={index}>
                   {data.message}
-                </div>
+                  {/* {data.message_time} */}
+                </span>
               ) : (
-                <div className="acceptMessage" key={index}>
+                <span className="acceptMessage" key={index}>
                   {data.message}
-                </div>
+                  {/* {data.message_time} */}
+                </span>
               )
             )}
           </ol>

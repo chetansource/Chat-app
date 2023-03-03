@@ -64,7 +64,7 @@ function ChatPage({ socket }) {
             ))}
           </ol>
         </div>
-        <ChatBox socket={socket} selectedUser={focusedUser} />
+        <ChatBox socket={socket} selectedUser={focusedUser} userid={userId} />
         <ConnectBox socket={socket} />
       </div>
     </div>

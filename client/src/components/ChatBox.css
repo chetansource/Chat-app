@@ -32,7 +32,7 @@
     padding: 0.2rem 1rem 0.2rem 1rem;
     background: rgb(153, 180, 248);
 }
-.sendMessage{
+.sendMessage {
     display: flex;
     flex-direction: row;
     justify-content: right;
@@ -43,6 +43,7 @@
     border-radius: 10%;
     padding: 0.2rem 1rem 0.2rem 1rem;  
     background: rgb(180, 160, 242);
+    
 }
 
 .listdis{
@@ -52,4 +53,6 @@
  .container3{
     display: flex;
     width: 100%;
+    overflow: auto;
+    flex-direction: column-reverse;
 }  
