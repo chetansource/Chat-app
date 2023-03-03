@@ -1,6 +1,6 @@
 .chatbody{
-    height: 50vh;
-    width: 507px;
+    height: 90vh;
+    width: 700px;
     display: flex;
     flex-direction: column;
     background: rgb(183, 201, 231);
@@ -8,7 +8,7 @@
 
 .textbox{
     height: 32px;
-    width: 430px;
+    width: 622px;
 }
 .send-btn{
     height: 36px;
@@ -18,9 +18,9 @@
     background: rgb(169, 250, 64);
 }
 .senderName{
-    width: 500px;
+    width: 700px;
     height: 30px;
-    font-size: 16px;
+    font-size: 20px;
     background: rgba(67, 150, 209);
 }
 .acceptMessage{

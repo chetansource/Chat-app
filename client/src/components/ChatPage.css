@@ -6,7 +6,7 @@
 
 .label{
     font-size: 25px;
-    width: 100px;
+    width: 90px;
     background: rgb(46, 100, 147);
 }
 .navbtn{
@@ -30,8 +30,9 @@
 }
 .list{
     background: rgb(67, 150, 209);
-    height: 54vh;
-    width: 200px;
+    height: 94vh;
+    width: 300px;
+    overflow: auto;
 }
 .heading{
     display: flex;
@@ -48,10 +49,10 @@
 .userlist{
     display: flex;
     flex-direction: column;
-    font-size: 18px;
+    font-size: 20px;
     text-align:left;
-    width:200px;
-    height: 30px;
+    width:300px;
+    height: 35px;
     background: rgb(85, 140, 192);
    border-style: groove;
    border-color: black;

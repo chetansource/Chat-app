@@ -6,13 +6,17 @@ function ChatBox({ socket, selectedUser, userid }) {
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
 
+  console.log(textList)
   function addText() {
     if (text.trim() === '') return
-    textList.push(text.trim())
-    setTextList([...textList, { message: text.trim(), sender_id: userid }])
+    setTextList([
+      ...textList,
+      { message: text.trim(), sender_id: userid, message_time: Date.now() },
+    ])
     socket.emit('chat-message', {
       message: text,
       receiver_name: selectedUser,
+      message_time: Date.now(),
     })
     setText('')
   }
@@ -36,6 +40,15 @@ function ChatBox({ socket, selectedUser, userid }) {
     socket.emit('previous-msg', { receiver_name: selectedUser })
   }, [socket, selectedUser])
 
+  function formateDate(date) {
+    const hours = date.getHours()
+    const minutes = date.getMinutes()
+
+    return (
+      (hours % 12) + ':' + minutes.toString().padStart(2, '0') + ' ' + (hours > 11 ? 'PM' : 'AM')
+    )
+  }
+
   return (
     <div>
       <div className="chatbody">
@@ -48,12 +61,14 @@ function ChatBox({ socket, selectedUser, userid }) {
               data.sender_id === userId ? (
                 <span className="sendMessage" key={index}>
                   {data.message}
-                  {/* {data.message_time} */}
+                  <br />
+                  {formateDate(new Date(data.message_time))}
                 </span>
               ) : (
                 <span className="acceptMessage" key={index}>
                   {data.message}
-                  {/* {data.message_time} */}
+                  <br />
+                  {formateDate(new Date(data.message_time))}
                 </span>
               )
             )}

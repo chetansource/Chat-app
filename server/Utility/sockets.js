@@ -37,7 +37,6 @@ export function socketConnection(httpServer) {
   let userCount = 0
   io.on('connection', async (socket) => {
     userCount += 1
-    console.log('Total users connected', userCount) //get the token
 
     //send userid
     socket.emit('userId', socket.userId)
@@ -62,8 +61,9 @@ export function socketConnection(httpServer) {
       const receiverId = data[0].user_id
       const socketId = await getSocketId(receiverId)
       let newMessage = args.message
+      const msgTime = args.message_time
       await insertMessage(newMessage, socket.userId, receiverId)
-      io.to(socketId[0].socket_id).emit('message', [{ message: newMessage }])
+      io.to(socketId[0].socket_id).emit('message', [{ message: newMessage, message_time: msgTime }])
     })
 
     //adding friend to friendsList
@@ -84,7 +84,6 @@ export function socketConnection(httpServer) {
     })
 
     socket.on('logout', async (userid) => {
-      console.log('>>', userid)
       await deleteSession(userid)
       userCount -= 1
     })
