@@ -1,5 +1,5 @@
 .loginpage{
-    background: rgb(242, 209, 169);
+    background: rgb(210, 193, 178);
     height: 100vh;
 }
 .loginbar{
@@ -7,7 +7,7 @@
     flex-direction: row;
     justify-content: flex-end;
     height: 30px;
-    background: rgb(171, 142, 121);
+    background: rgb(210, 193, 178);
 }
 .title{
     text-align: center;
@@ -23,10 +23,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* margin-top: 0%; */
     width: 450px;
     height: 350px;
-    background: rgb(235, 228, 188);
+    background: rgb(242, 237, 208);
 }
 .elements{
     display: flex;
@@ -60,7 +59,7 @@
     justify-content: center;
     font-size: 16px;
     width: 70px;
-    background: rgb(242, 209, 169);
+    background: rgb(235, 169, 99);
 }
 .barelement:hover{
     cursor: pointer;

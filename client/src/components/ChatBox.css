@@ -3,7 +3,7 @@
     width: 700px;
     display: flex;
     flex-direction: column;
-    background: rgb(183, 201, 231);
+    background: rgb(235, 226, 218);
 }
 
 .textbox{
@@ -21,7 +21,7 @@
     width: 700px;
     height: 30px;
     font-size: 20px;
-    background: rgba(67, 150, 209);
+    background: rgb(248, 163, 93);
 }
 .acceptMessage{
     display: flex;

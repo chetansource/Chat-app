@@ -4,8 +4,6 @@ import dotenv from 'dotenv'
 dotenv.config()
 const { Pool } = pg
 
-// console.log('before>>>', dotenv.config())
-
 const databaseConfig = {
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -13,8 +11,6 @@ const databaseConfig = {
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
 }
-
-// console.log('after>>>', databaseConfig)
 
 const pool = new Pool(databaseConfig)
 
@@ -53,19 +49,19 @@ export async function userSession(Sessionid, Userid) {
   return res
 }
 
-//get user Ids
-export async function userIds(receiverName) {
+//get receiverId
+export async function receiverID(receiverName) {
   const query = `SELECT user_id,user_name from users WHERE user_name=$1`
   const params = [receiverName]
   const res = await pool.query(query, params)
-  return res.rows
+  return res.rows[0]
 }
 //getting userId from sessionId
 export async function userId(sessionId) {
-  const query = `SELECT user_id from sessions WHERE session_id=$1`
+  const query = `SELECT user_id from sessions WHERE session_id=$1 `
   const params = [sessionId]
   const res = await pool.query(query, params)
-  return res.rows
+  return res.rows[0]
 }
 
 //insert socketId
@@ -81,7 +77,7 @@ export async function getSocketId(userId) {
   const query = `SELECT socket_id from sessions WHERE user_id=$1 ORDER BY created_at DESC LIMIT 1`
   const params = [userId]
   const res = await pool.query(query, params)
-  return res.rows
+  return res.rows[0]
 }
 
 //getting userName

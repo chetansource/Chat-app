@@ -45,7 +45,7 @@ function ChatPage({ socket }) {
       <div className="header">
         <label className="label">LinkUp</label>
         <div className="showLoginName">
-          <label className="loginName">{userName}</label>
+          <label className="login-Name">{userName}</label>
         </div>
         <button className="navbtn" onClick={navLogin}>
           Logout

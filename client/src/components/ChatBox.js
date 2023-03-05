@@ -6,17 +6,14 @@ function ChatBox({ socket, selectedUser, userid }) {
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
 
-  console.log(textList)
+  // console.log(textList)
   function addText() {
     if (text.trim() === '') return
-    setTextList([
-      ...textList,
-      { message: text.trim(), sender_id: userid, message_time: Date.now() },
-    ])
+    setTextList([...textList, { message: text.trim(), sender_id: userid, messageTime: Date.now() }])
     socket.emit('chat-message', {
       message: text,
-      receiver_name: selectedUser,
-      message_time: Date.now(),
+      receiverName: selectedUser,
+      messageTime: Date.now(),
     })
     setText('')
   }
@@ -27,7 +24,7 @@ function ChatBox({ socket, selectedUser, userid }) {
     })
 
     socket.on('message', (args) => {
-      setTextList([...textList, ...args])
+      setTextList([...textList, args])
     })
 
     return () => {
@@ -37,7 +34,7 @@ function ChatBox({ socket, selectedUser, userid }) {
 
   useEffect(() => {
     setTextList([])
-    socket.emit('previous-msg', { receiver_name: selectedUser })
+    socket.emit('previous-msg', { receiverName: selectedUser })
   }, [socket, selectedUser])
 
   function formateDate(date) {
@@ -62,13 +59,13 @@ function ChatBox({ socket, selectedUser, userid }) {
                 <span className="sendMessage" key={index}>
                   {data.message}
                   <br />
-                  {formateDate(new Date(data.message_time))}
+                  {formateDate(new Date(data.messageTime))}
                 </span>
               ) : (
                 <span className="acceptMessage" key={index}>
                   {data.message}
                   <br />
-                  {formateDate(new Date(data.message_time))}
+                  {formateDate(new Date(data.messageTime))}
                 </span>
               )
             )}

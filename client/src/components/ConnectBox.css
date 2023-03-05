@@ -1,14 +1,14 @@
 .connectBar{
     width: 300px;
     height: 94vh;
-    background: rgb(67, 150, 209);
+    background: rgb(240, 203, 171);
 }
 .l1{
     display: flex;
     font-size: 25px;
     height: 36px;
     justify-content: center;
-    background: rgb(49, 121, 184);
+    background: rgb(219, 161, 114);
 }
 .aduser{
     width:290px;

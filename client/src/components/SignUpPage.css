@@ -1,6 +1,6 @@
 .wrapper{
     width:100%;
-    background: rgb(213, 177, 146);
+    background: rgb(210, 193, 178);
     height: 100vh;
 }
 
@@ -9,7 +9,7 @@
     flex-direction: row;
     justify-content: flex-end;
     height: 30px;
-    background: rgb(171, 142, 121);
+    background: rgb(210, 193, 178);
 }
 
 .barele{
@@ -17,7 +17,7 @@
     justify-content: center;
     font-size: 18px;
     width: 70px;
-    background: rgb(242, 209, 169);
+    background: rgb(235, 169, 99);
 }
 .signupform{
     display: flex;
@@ -30,7 +30,7 @@
   align-items: center;
   width: 450px;
   height: 350px;
-    background: rgb(235, 228, 188);
+    background: rgb(242, 237, 208);
 }
 .sign-label{
     /* text-align: center; */

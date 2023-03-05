@@ -1,26 +1,31 @@
 .container1{
     display: flex;
     flex-direction: column;
-    background: rgb(96, 134, 191);
+    background: rgb(235, 226, 218);
 }
 
 .label{
     font-size: 25px;
     width: 90px;
-    background: rgb(46, 100, 147);
+    background: rgb(235, 226, 218);
+    border-style: groove;
 }
 .navbtn{
+    width: 70px;
+    font-size: 18px;
     justify-content: end;
-    background: rgb(46, 100, 147);
+    background: rgb(219, 161, 114);
+    border-style: groove;
 }
 .navbtn:hover{
-    background: rgb(60, 139, 199);
+    background: rgb(251, 191, 139);
 }
 .header{
     display: flex;
     justify-content:space-between;
     height:30px;
-    background: rgb(46, 100, 147);
+    background: rgb(235, 226, 218);
+    border-style: groove;
 }
 
 .chatpage{
@@ -29,7 +34,7 @@
     justify-content: center;   
 }
 .list{
-    background: rgb(67, 150, 209);
+    background: rgb(240, 203, 171);
     height: 94vh;
     width: 300px;
     overflow: auto;
@@ -39,7 +44,7 @@
     font-size: 25px;
     height: 36px;
     justify-content: center;
-    background: rgb(49, 121, 184);
+    background: rgb(219, 161, 114);
 }
 .showLoginName{
     font-size: 20px;
@@ -53,7 +58,7 @@
     text-align:left;
     width:300px;
     height: 35px;
-    background: rgb(85, 140, 192);
+    background: rgb(219, 161, 114);
    border-style: groove;
    border-color: black;
 }
@@ -66,6 +71,10 @@
 
 .userlist:focus{
     outline: 2px solid rgba(215, 236, 186, 0.945);
+}
+.login-Name{
+    font-size: 25px;
+
 }
 
 
