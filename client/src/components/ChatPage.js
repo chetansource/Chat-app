@@ -22,7 +22,9 @@ function ChatPage({ socket }) {
       const username = name[0].user_name
       setUserName(username)
     })
+  }, [socket])
 
+  useEffect(() => {
     socket.on('connectedList', (data) => {
       if (Array.isArray(data)) {
         const users = data.map((user) => user.user_name)
@@ -37,6 +39,7 @@ function ChatPage({ socket }) {
 
   function navLogin() {
     socket.emit('logout', userId)
+    socket.disconnect()
     navigate('/')
   }
 

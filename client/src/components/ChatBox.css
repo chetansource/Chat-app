@@ -27,6 +27,7 @@
     display: flex;
     border-bottom: groove;
     width: fit-content;
+    font-size: 18px;
     margin-left: 1rem;
     border-radius: 10%;
     padding: 0.2rem 1rem 0.2rem 1rem;
@@ -43,6 +44,7 @@
     border-radius: 10%;
     padding: 0.2rem 1rem 0.2rem 1rem;  
     background: rgb(180, 160, 242);
+    font-size: 18px;
     
 }
 
@@ -56,3 +58,7 @@
     overflow: auto;
     flex-direction: column-reverse;
 }  
+.msg-time{
+    margin-left: 10px;
+    font-size:15px;
+}

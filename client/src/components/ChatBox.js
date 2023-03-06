@@ -6,14 +6,16 @@ function ChatBox({ socket, selectedUser, userid }) {
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
 
-  // console.log(textList)
   function addText() {
     if (text.trim() === '') return
-    setTextList([...textList, { message: text.trim(), sender_id: userid, messageTime: Date.now() }])
+    setTextList([
+      ...textList,
+      { message: text.trim(), sender_id: userid, message_time: Date.now() },
+    ])
     socket.emit('chat-message', {
       message: text,
       receiverName: selectedUser,
-      messageTime: Date.now(),
+      message_time: Date.now(),
     })
     setText('')
   }
@@ -24,7 +26,8 @@ function ChatBox({ socket, selectedUser, userid }) {
     })
 
     socket.on('message', (args) => {
-      setTextList([...textList, args])
+      // setTextList([...textList, args])
+      setTextList((currentTextList) => [...currentTextList, args])
     })
 
     return () => {
@@ -59,13 +62,13 @@ function ChatBox({ socket, selectedUser, userid }) {
                 <span className="sendMessage" key={index}>
                   {data.message}
                   <br />
-                  {formateDate(new Date(data.messageTime))}
+                  <span className="msg-time">{formateDate(new Date(data.message_time))}</span>
                 </span>
               ) : (
                 <span className="acceptMessage" key={index}>
                   {data.message}
                   <br />
-                  {formateDate(new Date(data.messageTime))}
+                  <span className="msg-time">{formateDate(new Date(data.message_time))}</span>
                 </span>
               )
             )}

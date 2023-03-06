@@ -51,9 +51,11 @@ export function socketConnection(httpServer) {
         const data = await receiverID(args.receiverName)
         const receiverId = data.user_id
         const messages = await getUserMessages(socket.userId, receiverId)
-        if (messages.length > 0) {
-          socket.emit('message', messages)
-        }
+        messages.forEach((message) => {
+          if (messages.length > 0) {
+            socket.emit('message', message)
+          }
+        })
       }
     })
     //why to use websockets for chat messsage why not rest
@@ -61,12 +63,12 @@ export function socketConnection(httpServer) {
     // receiving the message from one user and sending to another
     socket.on('chat-message', async (args) => {
       const data = await receiverID(args.receiverName)
-      const receiverId = data.user_id //change it access one row try catch need here
+      const receiverId = data.user_id
       const socketId = await getSocketId(receiverId)
       let newMessage = args.message
-      const msgTime = args.messageTime
+      const msgTime = args.message_time
       await insertMessage(newMessage, socket.userId, receiverId)
-      io.to(socketId.socket_id).emit('message', { message: newMessage, messageTime: msgTime })
+      io.to(socketId.socket_id).emit('message', { message: newMessage, message_time: msgTime })
     })
 
     //adding friend to friendsList
@@ -77,11 +79,9 @@ export function socketConnection(httpServer) {
       }
 
       const data = await receiverID(args)
-      console.log('>>', data.length)
 
       const receiverId = data.user_id
       if (socket.userId !== receiverId) {
-        console.log('>>', data, socket.userId, receiverId)
         await insertContactList(socket.userId, receiverId)
       }
       const friendName = await userDetails(args)
