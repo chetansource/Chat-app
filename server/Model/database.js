@@ -17,13 +17,13 @@ const pool = new Pool(databaseConfig)
 console.log('Connected to the database')
 
 //checking if the username already exists or not
-// change return type to boolean
+
 export async function userNameAvailable(username) {
   const query = 'SELECT user_name from users WHERE user_name = $1'
   const params = [username]
   const res = await pool.query(query, params)
-  if (res.rowCount === 1) return true
-  return false
+  if (res.rowCount === 1) return false
+  return true
 }
 
 // add the user to the database when i user logged in
@@ -31,7 +31,6 @@ export async function insertUser(username, passwd) {
   const query = 'INSERT INTO users(user_name,password) VALUES($1,$2)'
   const params = [username, passwd]
   const res = await pool.query(query, params)
-  console.log('adduser>>', res)
   return res
 }
 //fetch  data for login
@@ -80,6 +79,7 @@ export async function getSocketId(userId) {
   const res = await pool.query(query, params)
   return res.rows[0]
 }
+//
 
 //getting userName
 export async function getUser(id) {

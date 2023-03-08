@@ -42,8 +42,8 @@ export function socketConnection(httpServer) {
     socket.emit('userId', socket.userId)
 
     //retriving the friends list
-    const data = await getContacts(socket.userId)
-    socket.emit('connectedList', data)
+    const friendsList = await getContacts(socket.userId)
+    friendsList.forEach((friend) => socket.emit('connectedList', friend))
 
     //retriving the past messages
     socket.on('previous-msg', async (args) => {
@@ -65,17 +65,20 @@ export function socketConnection(httpServer) {
       const data = await getReceiverID(args.receiverName)
       const receiverId = data.user_id
       const socketId = await getSocketId(receiverId)
-      let newMessage = args.message
-      const msgTime = args.message_time
-      await insertMessage(newMessage, socket.userId, receiverId)
-      io.to(socketId.socket_id).emit('message', { message: newMessage, message_time: msgTime })
+      if (socketId !== undefined) {
+        let newMessage = args.message
+        const msgTime = args.message_time
+        await insertMessage(newMessage, socket.userId, receiverId)
+        console.log(socketId.socket_id)
+        io.to(socketId.socket_id).emit('message', { message: newMessage, message_time: msgTime })
+      }
     })
 
     //adding friend to friendsList
     socket.on('adding_frd', async (args) => {
-      const friendAvailable = await userNameAvailable(args)
-      if (friendAvailable === 'Available') {
-        socket.emit('connectedList', 'user not available in the app')
+      const isFriendNotAvailable = await userNameAvailable(args)
+      if (isFriendNotAvailable) {
+        return socket.emit('connectedList', 'user not found')
       }
 
       const data = await getReceiverID(args)

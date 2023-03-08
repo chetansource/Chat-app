@@ -12,7 +12,7 @@ function ConnectBox({ socket }) {
 
   useEffect(() => {
     socket.on('connectedList', (data) => {
-      if ((typeof data === 'string') & (data === 'user not available in the app')) {
+      if ((typeof data === 'string') & (data === 'user not found')) {
         setErrorMessage(data)
       }
     })

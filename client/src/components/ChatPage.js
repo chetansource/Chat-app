@@ -25,13 +25,19 @@ function ChatPage({ socket }) {
   }, [socket])
 
   useEffect(() => {
-    socket.on('connectedList', (data) => {
-      if (Array.isArray(data)) {
-        const users = data.map((user) => user.user_name)
+    socket.on(
+      'disconnect',
+      () => {
+        setUserList([])
+      },
+      []
+    )
 
-        setUserList((currentUserList) => [...currentUserList, ...users])
-        console.log('>>', users, userList)
-        setFocusedUser(users[0])
+    socket.on('connectedList', (data) => {
+      if (typeof data === 'object') {
+        setFocusedUser(data.user_name)
+        // const users = data.map((user) => user.user_name)
+        setUserList((currentUserList) => [...currentUserList, data.user_name])
       }
     })
     return () => {
