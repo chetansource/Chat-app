@@ -1,4 +1,10 @@
-import { insertUser, userNameAvailable, userSession, getUserDetails } from '../Model/database.js'
+import {
+  insertUser,
+  userNameAvailable,
+  userSession,
+  getUserDetails,
+  getUser,
+} from '../Model/database.js'
 import bcrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -54,7 +60,7 @@ export async function loginUser(req, res) {
 
 export async function getUserinfo(req, res) {
   try {
-    const user = await getUserDetails(req.params.id)
+    const user = await getUser(req.params.id)
     return res.json(user)
   } catch (error) {
     return res.sendStatus(500)

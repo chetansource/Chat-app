@@ -10,7 +10,7 @@ function LoginPage() {
   const [errorMessage, setErrorMessage] = useState('')
 
   async function LoginUser() {
-    if (userName.trim().length === 0) return
+    if (userName.trim().length === 0) return [setErrorMessage('please enter username')]
     if (password.trim().length < 6) {
       return [setErrorMessage('password needs atleast 6 characters'), setPassword('')]
     }

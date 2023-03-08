@@ -19,7 +19,7 @@ function ChatPage({ socket }) {
     socket.on('userId', async (userid) => {
       setUserId(userid)
       const name = await getUserName(userid)
-      const username = name[0].user_name
+      const username = name.user_name
       setUserName(username)
     })
   }, [socket])
@@ -28,7 +28,9 @@ function ChatPage({ socket }) {
     socket.on('connectedList', (data) => {
       if (Array.isArray(data)) {
         const users = data.map((user) => user.user_name)
-        setUserList([...userList, ...users])
+
+        setUserList((currentUserList) => [...currentUserList, ...users])
+        console.log('>>', users, userList)
         setFocusedUser(users[0])
       }
     })

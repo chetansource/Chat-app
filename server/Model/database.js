@@ -35,7 +35,6 @@ export async function insertUser(username, passwd) {
   return res
 }
 //fetch  data for login
-// change function name
 export async function getUserDetails(username) {
   const query = `SELECT * from users WHERE user_name = $1`
   const params = [username]
@@ -52,14 +51,14 @@ export async function userSession(Sessionid, Userid) {
 }
 
 //get receiverId
-export async function receiverID(receiverName) {
+export async function getReceiverID(receiverName) {
   const query = `SELECT user_id,user_name from users WHERE user_name=$1`
   const params = [receiverName]
   const res = await pool.query(query, params)
   return res.rows[0]
 }
 //getting userId from sessionId
-export async function userId(sessionId) {
+export async function getUserId(sessionId) {
   const query = `SELECT user_id from sessions WHERE session_id=$1 `
   const params = [sessionId]
   const res = await pool.query(query, params)
@@ -87,7 +86,7 @@ export async function getUser(id) {
   const query = `SELECT user_name from users WHERE user_id=$1`
   const params = [id]
   const res = await pool.query(query, params)
-  return res.rows
+  return res.rows[0]
 }
 
 //send message to a frd

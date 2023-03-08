@@ -1,8 +1,8 @@
 import { Server } from 'socket.io'
 import {
   insertMessage,
-  receiverID,
-  userId,
+  getReceiverID,
+  getUserId,
   getContacts,
   insertSocketId,
   getUserMessages,
@@ -26,7 +26,7 @@ export function socketConnection(httpServer) {
     try {
       const cookiee = socket.handshake.headers.cookie.split('=')[1]
       await insertSocketId(socket.id, cookiee)
-      const user = await userId(cookiee)
+      const user = await getUserId(cookiee)
       socket.userId = user.user_id
       next()
     } catch (error) {
@@ -48,7 +48,7 @@ export function socketConnection(httpServer) {
     //retriving the past messages
     socket.on('previous-msg', async (args) => {
       if (args.receiverName.length > 0 || args.length > 0) {
-        const data = await receiverID(args.receiverName)
+        const data = await getReceiverID(args.receiverName)
         const receiverId = data.user_id
         const messages = await getUserMessages(socket.userId, receiverId)
         messages.forEach((message) => {
@@ -62,7 +62,7 @@ export function socketConnection(httpServer) {
     //need to look at lazy loading
     // receiving the message from one user and sending to another
     socket.on('chat-message', async (args) => {
-      const data = await receiverID(args.receiverName)
+      const data = await getReceiverID(args.receiverName)
       const receiverId = data.user_id
       const socketId = await getSocketId(receiverId)
       let newMessage = args.message
@@ -78,7 +78,7 @@ export function socketConnection(httpServer) {
         socket.emit('connectedList', 'user not available in the app')
       }
 
-      const data = await receiverID(args)
+      const data = await getReceiverID(args)
 
       const receiverId = data.user_id
       if (socket.userId !== receiverId) {
