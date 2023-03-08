@@ -47,7 +47,7 @@ export function socketConnection(httpServer) {
 
     //retriving the past messages
     socket.on('previous-msg', async (args) => {
-      if (args.receiverName.length > 0 || args.length > 0) {
+      if (args.receiverName.length > 0) {
         const data = await getReceiverID(args.receiverName)
         const receiverId = data.user_id
         const messages = await getUserMessages(socket.userId, receiverId)

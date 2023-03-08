@@ -19,27 +19,24 @@ function ChatPage({ socket }) {
     socket.on('userId', async (userid) => {
       setUserId(userid)
       const name = await getUserName(userid)
+      console.log(name)
       const username = name.user_name
       setUserName(username)
     })
   }, [socket])
 
   useEffect(() => {
-    socket.on(
-      'disconnect',
-      () => {
-        setUserList([])
-      },
-      []
-    )
+    socket.on('disconnect', () => {
+      setUserList([])
+    })
 
     socket.on('connectedList', (data) => {
       if (typeof data === 'object') {
-        setFocusedUser(data.user_name)
-        // const users = data.map((user) => user.user_name)
         setUserList((currentUserList) => [...currentUserList, data.user_name])
+        setFocusedUser(data.user_name)
       }
     })
+
     return () => {
       socket.off('connectedList')
     }

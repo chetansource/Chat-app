@@ -26,16 +26,18 @@ function ChatBox({ socket, selectedUser, userid }) {
     })
 
     socket.on('message', (args) => {
+      // console.log('>', args)
       setTextList((currentTextList) => [...currentTextList, args])
     })
 
     return () => {
       socket.off('message')
     }
-  }, [socket, textList])
+  }, [socket])
 
   useEffect(() => {
     setTextList([])
+    // console.log('.', selectedUser)
     socket.emit('previous-msg', { receiverName: selectedUser })
   }, [socket, selectedUser])
 
