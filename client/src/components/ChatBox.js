@@ -26,7 +26,6 @@ function ChatBox({ socket, selectedUser, userid }) {
     })
 
     socket.on('message', (args) => {
-      // setTextList([...textList, args])
       setTextList((currentTextList) => [...currentTextList, args])
     })
 

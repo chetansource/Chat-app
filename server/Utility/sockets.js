@@ -7,7 +7,7 @@ import {
   insertSocketId,
   getUserMessages,
   userNameAvailable,
-  userDetails,
+  getUserDetails,
   insertContactList,
   getSocketId,
   deleteSession,
@@ -84,7 +84,7 @@ export function socketConnection(httpServer) {
       if (socket.userId !== receiverId) {
         await insertContactList(socket.userId, receiverId)
       }
-      const friendName = await userDetails(args)
+      const friendName = await getUserDetails(args)
       socket.emit('connectedList', friendName)
     })
 

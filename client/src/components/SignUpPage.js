@@ -10,7 +10,7 @@ function SignUpPage() {
   const [confirmPassword, setConfirmpassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   async function registerUser() {
-    if (username.trim().length === 0) return
+    if (username.trim().length === 0) return [setErrorMessage('please enter username')]
     setUsername('')
     if (passWord.trim().length < 6) {
       return [setErrorMessage('password needs atleast 6 characters'), setPassWord('')]
