@@ -69,7 +69,6 @@ export function socketConnection(httpServer) {
         let newMessage = args.message
         const msgTime = args.message_time
         await insertMessage(newMessage, socket.userId, receiverId)
-        console.log(socketId.socket_id)
         io.to(socketId.socket_id).emit('message', { message: newMessage, message_time: msgTime })
       }
     })

@@ -19,7 +19,6 @@ function ChatPage({ socket }) {
     socket.on('userId', async (userid) => {
       setUserId(userid)
       const name = await getUserName(userid)
-      console.log(name)
       const username = name.user_name
       setUserName(username)
     })
@@ -29,18 +28,16 @@ function ChatPage({ socket }) {
     socket.on('disconnect', () => {
       setUserList([])
     })
-
     socket.on('connectedList', (data) => {
       if (typeof data === 'object') {
         setUserList((currentUserList) => [...currentUserList, data.user_name])
-        setFocusedUser(data.user_name)
       }
     })
 
     return () => {
       socket.off('connectedList')
     }
-  }, [socket, userList])
+  }, [socket, userList, focusedUser])
 
   function navLogin() {
     socket.emit('logout', userId)
@@ -65,14 +62,25 @@ function ChatPage({ socket }) {
           <ol className="orderedList">
             {userList.map((user, index) => (
               <div key={index}>
-                <div className="userlist" onClick={() => setFocusedUser(user)}>
+                <div
+                  className="userlist"
+                  onClick={() => {
+                    setFocusedUser(user)
+                  }}
+                >
                   {user}
                 </div>
               </div>
             ))}
           </ol>
         </div>
-        <ChatBox socket={socket} selectedUser={focusedUser} userid={userId} />
+        <ChatBox
+          socket={socket}
+          selectedUser={focusedUser}
+          userList={userList}
+          setUserList={setUserList}
+          userid={userId}
+        />
         <ConnectBox socket={socket} />
       </div>
     </div>
