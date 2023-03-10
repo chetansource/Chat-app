@@ -68,7 +68,7 @@ function ChatPage({ socket }) {
                     setFocusedUser(user)
                   }}
                 >
-                  {user}
+                  <p className="friendsName"> {user}</p>
                 </div>
               </div>
             ))}

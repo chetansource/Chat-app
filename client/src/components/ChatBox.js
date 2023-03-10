@@ -59,7 +59,7 @@ function ChatBox({ socket, selectedUser, userList, setUserList, userid }) {
   }
 
   return (
-    <div>
+    <div className="chatbodyContainer">
       <div className="chatbody">
         <div className="displaySenderName">
           <input className="senderName" value={selectedUser} readOnly></input>
