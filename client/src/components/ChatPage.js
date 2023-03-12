@@ -22,18 +22,14 @@ function ChatPage({ socket }) {
       const username = name.user_name
       setUserName(username)
     })
-  }, [socket])
 
-  // useEffect(() => {}, )
-
-  useEffect(() => {
     const friList = async () => {
-      const friendsList = await getFriendsList(userId)
-      const fList = friendsList.map((list) => list.user_name)
-      setUserList(fList)
+      let friendsList = await getFriendsList(userId)
+      friendsList = friendsList.map((list) => list.user_name)
+      setUserList(friendsList)
     }
     friList()
-  }, [userId, userList])
+  }, [socket, userId])
 
   function navLogin() {
     socket.emit('logout', userId)

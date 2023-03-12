@@ -49,9 +49,9 @@ export async function loginUser(name, passwd) {
   }
 }
 
-export async function getUserName(id) {
+export async function getUserName(userId) {
   try {
-    const url = globalUrl + `/users/${id}`
+    const url = globalUrl + `/users/${userId}`
     const response = await fetch(url)
     const data = await response.json()
     return data
@@ -63,6 +63,17 @@ export async function getUserName(id) {
 export async function getFriendsList(userId) {
   try {
     const url = globalUrl + `/users/contacts/${userId}`
+    const response = await fetch(url)
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function getMessages(userId, receiverId) {
+  try {
+    const url = globalUrl + `/messages/${userId},${receiverId}`
     const response = await fetch(url)
     const data = await response.json()
     return data

@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { getMessages } from '../requests.js'
 import './ChatBox.css'
 
 function ChatBox({ socket, selectedUser, userList, setUserList, userid }) {
   const [userId, setUserId] = useState(0)
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
-
-  // function reorderFriendList() {
-  //   const foundIdx = userList.findIndex((el) => el === selectedUser)
-  //   let tempUserList = userList.splice(foundIdx, 1)
-  //   tempUserList = [...tempUserList, ...userList]
-  //   setUserList(tempUserList)
-  // }
+  const [receiverId, setRecId] = useState(0)
 
   function addText() {
     if (text.trim() === '') return
@@ -30,7 +25,7 @@ function ChatBox({ socket, selectedUser, userList, setUserList, userid }) {
   }
 
   useEffect(() => {
-    socket.on('userId', (userid) => {
+    socket.on('userId', async (userid) => {
       setUserId(userid)
     })
 
@@ -41,13 +36,32 @@ function ChatBox({ socket, selectedUser, userList, setUserList, userid }) {
     return () => {
       socket.off('message')
     }
-  }, [socket])
+  }, [socket, receiverId, userId])
 
   useEffect(() => {
-    setTextList([])
+    socket.emit('selectedUser', { receiverName: selectedUser })
+    socket.on('recId', (args) => {
+      setRecId(args)
+    })
+  }, [socket, selectedUser])
 
-    socket.emit('previous-msg', { receiverName: selectedUser })
-  }, [socket, selectedUser, userList, setUserList])
+  useEffect(() => {
+    const getMsgs = async () => {
+      if (receiverId !== 0) {
+        const messages = await getMessages(userId, receiverId)
+        console.log('1.', messages)
+        setTextList(messages)
+        // const data=messages.map((data) => data)
+      }
+    }
+    getMsgs()
+  }, [userId, receiverId])
+
+  // useEffect(() => {
+  //   // setTextList([])
+
+  //   // socket.emit('previous-msg', { receiverName: selectedUser })
+  // }, [])
 
   function formateDate(date) {
     const hours = date.getHours()

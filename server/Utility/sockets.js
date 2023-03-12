@@ -41,25 +41,30 @@ export function socketConnection(httpServer) {
     //send userid
     socket.emit('userId', socket.userId)
 
-    //retriving the friends list
-    // const friendsList = await getContacts(socket.userId)
-    // friendsList.forEach((friend) => socket.emit('connectedList', friend))
-
-    //retriving the past messages
-    socket.on('previous-msg', async (args) => {
+    //send receiverId
+    socket.on('selectedUser', async (args) => {
       if (args.receiverName.length > 0) {
-        //invert the if block and return early
         const data = await getReceiverID(args.receiverName)
         const receiverId = data.user_id
-        const messages = await getUserMessages(socket.userId, receiverId)
-        messages.forEach((message) => {
-          //
-          if (messages.length > 0) {
-            socket.emit('message', message)
-          }
-        })
+        socket.emit('recId', receiverId)
       }
     })
+
+    //retriving the past messages
+    // socket.on('previous-msg', async (args) => {
+    //   if (args.receiverName.length > 0) {
+    //     //invert the if block and return early
+    //     const data = await getReceiverID(args.receiverName)
+    //     const receiverId = data.user_id
+    //     const messages = await getUserMessages(socket.userId, receiverId)
+    //     messages.forEach((message) => {
+    //       //
+    //       if (messages.length > 0) {
+    //         socket.emit('message', message)
+    //       }
+    //     })
+    //   }
+    // })
 
     // receiving the message from one user and sending to another
     socket.on('chat-message', async (args) => {
@@ -101,4 +106,3 @@ export function socketConnection(httpServer) {
     })
   })
 }
-//why to use sockets to access friends list not with rest //

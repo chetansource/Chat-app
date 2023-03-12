@@ -1,6 +1,7 @@
 import express from 'express'
 import { createServer } from 'http'
 import { router as userRouter } from './Routes/userRoute.js'
+import { router as messageRoute } from './Routes/messageRoute.js'
 import { socketConnection } from './Utility/sockets.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
@@ -14,6 +15,7 @@ const httpServer = createServer(app)
 socketConnection(httpServer)
 
 app.use('/users', userRouter)
+app.use('/messages', messageRoute)
 
 httpServer.listen(3001, () => {
   console.log('SERVER RUNNING...')
