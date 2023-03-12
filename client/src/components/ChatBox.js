@@ -6,12 +6,18 @@ function ChatBox({ socket, selectedUser, userList, setUserList, userid }) {
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
 
+  // function reorderFriendList() {
+  //   const foundIdx = userList.findIndex((el) => el === selectedUser)
+  //   let tempUserList = userList.splice(foundIdx, 1)
+  //   tempUserList = [...tempUserList, ...userList]
+  //   setUserList(tempUserList)
+  // }
+
   function addText() {
     if (text.trim() === '') return
-
     setTextList([
       ...textList,
-      { message: text.trim(), sender_id: userid, message_time: Date.now() },
+      { message: text, sender_id: userid, message_time: Date.now() },
     ])
 
     socket.emit('chat-message', {
@@ -19,12 +25,6 @@ function ChatBox({ socket, selectedUser, userList, setUserList, userid }) {
       receiverName: selectedUser,
       message_time: Date.now(),
     })
-
-    const foundIdx = userList.findIndex((el) => el === selectedUser)
-    let tempUserList = userList.splice(foundIdx, 1)
-    tempUserList = [...tempUserList, ...userList]
-    console.log('temp2', userList)
-    setUserList(tempUserList)
 
     setText('')
   }
@@ -54,7 +54,11 @@ function ChatBox({ socket, selectedUser, userList, setUserList, userid }) {
     const minutes = date.getMinutes()
 
     return (
-      (hours % 12) + ':' + minutes.toString().padStart(2, '0') + ' ' + (hours > 11 ? 'PM' : 'AM')
+      (hours % 12) +
+      ':' +
+      minutes.toString().padStart(2, '0') +
+      ' ' +
+      (hours > 11 ? 'PM' : 'AM')
     )
   }
 
@@ -73,14 +77,24 @@ function ChatBox({ socket, selectedUser, userList, setUserList, userid }) {
                     <span className="sendMessage" key={index}>
                       {data.message}
                       <br />
-                      <span className="msg-time">{formateDate(new Date(data.message_time))}</span>
+                      <span className="msg-time">
+                        {formateDate(new Date(data.message_time))}
+                      </span>
                     </span>
                   ) : (
-                    <span className="acceptMessage" key={index}>
-                      {data.message}
-                      <br />
-                      <span className="msg-time">{formateDate(new Date(data.message_time))}</span>
-                    </span>
+                    <div key={index}>
+                      {selectedUser.length !== 0 ? (
+                        <span className="acceptMessage" key={index}>
+                          {data.message}
+                          <br />
+                          <span className="msg-time">
+                            {formateDate(new Date(data.message_time))}
+                          </span>
+                        </span>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
                   )
                 )}
               </>
@@ -108,3 +122,5 @@ function ChatBox({ socket, selectedUser, userList, setUserList, userid }) {
 }
 
 export default ChatBox
+
+//use tailwind and chakra ui

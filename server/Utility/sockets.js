@@ -42,34 +42,39 @@ export function socketConnection(httpServer) {
     socket.emit('userId', socket.userId)
 
     //retriving the friends list
-    const friendsList = await getContacts(socket.userId)
-    friendsList.forEach((friend) => socket.emit('connectedList', friend))
+    // const friendsList = await getContacts(socket.userId)
+    // friendsList.forEach((friend) => socket.emit('connectedList', friend))
 
     //retriving the past messages
     socket.on('previous-msg', async (args) => {
       if (args.receiverName.length > 0) {
+        //invert the if block and return early
         const data = await getReceiverID(args.receiverName)
         const receiverId = data.user_id
         const messages = await getUserMessages(socket.userId, receiverId)
         messages.forEach((message) => {
+          //
           if (messages.length > 0) {
             socket.emit('message', message)
           }
         })
       }
     })
-    //why to use websockets for chat messsage why not rest
-    //need to look at lazy loading
+
     // receiving the message from one user and sending to another
     socket.on('chat-message', async (args) => {
       const data = await getReceiverID(args.receiverName)
       const receiverId = data.user_id
+
       const socketId = await getSocketId(receiverId)
       if (socketId !== undefined) {
-        let newMessage = args.message
+        let newMessage = args.message //
         const msgTime = args.message_time
         await insertMessage(newMessage, socket.userId, receiverId)
-        io.to(socketId.socket_id).emit('message', { message: newMessage, message_time: msgTime })
+        io.to(socketId.socket_id).emit('message', {
+          message: newMessage,
+          message_time: msgTime,
+        })
       }
     })
 
@@ -96,4 +101,4 @@ export function socketConnection(httpServer) {
     })
   })
 }
-//why to use sockets to access friends list not with rest
+//why to use sockets to access friends list not with rest //

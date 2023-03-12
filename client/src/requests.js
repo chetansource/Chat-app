@@ -59,3 +59,14 @@ export async function getUserName(id) {
     console.log(error)
   }
 }
+
+export async function getFriendsList(userId) {
+  try {
+    const url = globalUrl + `/users/contacts/${userId}`
+    const response = await fetch(url)
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}

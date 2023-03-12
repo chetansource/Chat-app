@@ -3,7 +3,7 @@ import './ChatPage.css'
 import { useNavigate } from 'react-router-dom'
 import ChatBox from './ChatBox'
 import ConnectBox from './ConnectBox'
-import { getUserName } from '../requests.js'
+import { getFriendsList, getUserName } from '../requests.js'
 
 function ChatPage({ socket }) {
   const navigate = useNavigate()
@@ -24,20 +24,16 @@ function ChatPage({ socket }) {
     })
   }, [socket])
 
-  useEffect(() => {
-    socket.on('disconnect', () => {
-      setUserList([])
-    })
-    socket.on('connectedList', (data) => {
-      if (typeof data === 'object') {
-        setUserList((currentUserList) => [...currentUserList, data.user_name])
-      }
-    })
+  // useEffect(() => {}, )
 
-    return () => {
-      socket.off('connectedList')
+  useEffect(() => {
+    const friList = async () => {
+      const friendsList = await getFriendsList(userId)
+      const fList = friendsList.map((list) => list.user_name)
+      setUserList(fList)
     }
-  }, [socket, userList, focusedUser])
+    friList()
+  }, [userId, userList])
 
   function navLogin() {
     socket.emit('logout', userId)

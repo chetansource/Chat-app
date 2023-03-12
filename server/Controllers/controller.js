@@ -4,6 +4,7 @@ import {
   userSession,
   getUserDetails,
   getUser,
+  getContacts,
 } from '../Model/database.js'
 import bcrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid'
@@ -62,6 +63,15 @@ export async function getUserinfo(req, res) {
   try {
     const user = await getUser(req.params.id)
     return res.json(user)
+  } catch (error) {
+    return res.sendStatus(500)
+  }
+}
+
+export async function getUserContacts(req, res) {
+  try {
+    const friendsList = await getContacts(req.params.id)
+    return res.json(friendsList)
   } catch (error) {
     return res.sendStatus(500)
   }
