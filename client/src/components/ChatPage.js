@@ -12,6 +12,8 @@ function ChatPage({ socket }) {
   const [userList, setUserList] = useState([])
   const [focusedUser, setFocusedUser] = useState('')
 
+  console.log('1.', userList)
+
   useEffect(() => {
     socket.connect()
 
@@ -24,9 +26,11 @@ function ChatPage({ socket }) {
     })
 
     const friList = async () => {
-      let friendsList = await getFriendsList(userId)
-      friendsList = friendsList.map((list) => list.user_name)
-      setUserList(friendsList)
+      if (userId !== '') {
+        let friendsList = await getFriendsList(userId)
+        friendsList = friendsList.map((list) => list.user_name)
+        setUserList(friendsList)
+      }
     }
     friList()
   }, [socket, userId])
@@ -66,14 +70,12 @@ function ChatPage({ socket }) {
             ))}
           </ol>
         </div>
-        <ChatBox
-          socket={socket}
-          selectedUser={focusedUser}
+        <ChatBox socket={socket} selectedUser={focusedUser} userid={userId} />
+        <ConnectBox
+          userid={userId}
           userList={userList}
           setUserList={setUserList}
-          userid={userId}
         />
-        <ConnectBox socket={socket} />
       </div>
     </div>
   )

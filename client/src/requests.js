@@ -81,3 +81,27 @@ export async function getMessages(userId, receiverId) {
     console.log(error)
   }
 }
+
+export async function addFrdtoContacts(userId, frdName) {
+  try {
+    const config = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        userName: frdName,
+      }),
+    }
+    const url = globalUrl + `/users/${userId}`
+    const response = await fetch(url, config)
+    const status = response.status
+    if (status === 400) {
+      return await response.json()
+    }
+    return status
+  } catch (error) {
+    console.log(error)
+  }
+}

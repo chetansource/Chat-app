@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import './ConnectBox.css'
+import { addFrdtoContacts } from '../requests.js'
 
-function ConnectBox({ socket }) {
+function ConnectBox({ userid, userList, setUserList }) {
   const [userName, setUserName] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
-  function addFriend() {
+  async function addFriend() {
     setUserName('')
-    socket.emit('adding_frd', userName)
+    const data = await addFrdtoContacts(userid, userName)
+    setErrorMessage(data.message)
+    if (data === 200) {
+      setUserList([...userList, userName])
+    }
   }
 
-  useEffect(() => {
-    socket.on('connectedList', (data) => {
-      if ((typeof data === 'string') & (data === 'user not found')) {
-        setErrorMessage(data)
-      }
-    })
-  })
   return (
     <div>
       <div className="connectBar">

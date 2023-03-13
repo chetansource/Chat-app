@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getMessages } from '../requests.js'
 import './ChatBox.css'
 
-function ChatBox({ socket, selectedUser, userList, setUserList, userid }) {
+function ChatBox({ socket, selectedUser, userid }) {
   const [userId, setUserId] = useState(0)
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
@@ -49,19 +49,11 @@ function ChatBox({ socket, selectedUser, userList, setUserList, userid }) {
     const getMsgs = async () => {
       if (receiverId !== 0) {
         const messages = await getMessages(userId, receiverId)
-        console.log('1.', messages)
         setTextList(messages)
-        // const data=messages.map((data) => data)
       }
     }
     getMsgs()
   }, [userId, receiverId])
-
-  // useEffect(() => {
-  //   // setTextList([])
-
-  //   // socket.emit('previous-msg', { receiverName: selectedUser })
-  // }, [])
 
   function formateDate(date) {
     const hours = date.getHours()

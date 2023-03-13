@@ -6,6 +6,8 @@ import {
   getUser,
   getContacts,
   getUserMessages,
+  getReceiverID,
+  insertContactList,
 } from '../Model/database.js'
 import bcrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid'
@@ -86,6 +88,22 @@ export async function getMessages(req, res) {
     const rId = arrId[1]
     const msgs = await getUserMessages(sId, rId)
     return res.json(msgs)
+  } catch (error) {
+    return res.sendStatus(500)
+  }
+}
+
+export async function addFriend(req, res) {
+  try {
+    const uId = req.params.id
+    const isFriendNotAvailable = await userNameAvailable(req.body.userName)
+    if (isFriendNotAvailable) {
+      return res.status(400).json({ message: 'user not found' })
+    }
+    const receiverId = await getReceiverID(req.body.userName)
+    const recId = receiverId.user_id
+    const data = await insertContactList(uId, recId)
+    return res.json(data)
   } catch (error) {
     return res.sendStatus(500)
   }
