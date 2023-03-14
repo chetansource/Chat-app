@@ -4,9 +4,6 @@ import {
   getReceiverID,
   getUserId,
   insertSocketId,
-  userNameAvailable,
-  getUserDetails,
-  insertContactList,
   getSocketId,
   deleteSession,
 } from '../Model/database.js'
@@ -63,23 +60,6 @@ export function socketConnection(httpServer) {
           message_time: msgTime,
         })
       }
-    })
-
-    //adding friend to friendsList
-    socket.on('adding_frd', async (args) => {
-      const isFriendNotAvailable = await userNameAvailable(args)
-      if (isFriendNotAvailable) {
-        return socket.emit('connectedList', 'user not found')
-      }
-
-      const data = await getReceiverID(args)
-
-      const receiverId = data.user_id
-      if (socket.userId !== receiverId) {
-        await insertContactList(socket.userId, receiverId)
-      }
-      const friendName = await getUserDetails(args)
-      socket.emit('connectedList', friendName)
     })
 
     socket.on('logout', async (userid) => {

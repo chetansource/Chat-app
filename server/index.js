@@ -5,6 +5,7 @@ import { router as messageRoute } from './Routes/messageRoute.js'
 import { socketConnection } from './Utility/sockets.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import { authenticateToken } from './Utility/middleware.js'
 
 const app = express()
 app.use(cors({ origin: ['http://localhost:3000'], credentials: true }))
@@ -15,7 +16,7 @@ const httpServer = createServer(app)
 socketConnection(httpServer)
 
 app.use('/users', userRouter)
-app.use('/messages', messageRoute)
+app.use('/messages', authenticateToken, messageRoute)
 
 httpServer.listen(3001, () => {
   console.log('SERVER RUNNING...')

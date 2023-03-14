@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './ConnectBox.css'
 import { addFrdtoContacts } from '../requests.js'
 

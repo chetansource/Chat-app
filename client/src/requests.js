@@ -52,7 +52,7 @@ export async function loginUser(name, passwd) {
 export async function getUserName(userId) {
   try {
     const url = globalUrl + `/users/${userId}`
-    const response = await fetch(url)
+    const response = await fetch(url, { credentials: 'include' })
     const data = await response.json()
     return data
   } catch (error) {
@@ -63,7 +63,7 @@ export async function getUserName(userId) {
 export async function getFriendsList(userId) {
   try {
     const url = globalUrl + `/users/contacts/${userId}`
-    const response = await fetch(url)
+    const response = await fetch(url, { credentials: 'include' })
     const data = await response.json()
     return data
   } catch (error) {
@@ -74,7 +74,7 @@ export async function getFriendsList(userId) {
 export async function getMessages(userId, receiverId) {
   try {
     const url = globalUrl + `/messages/${userId},${receiverId}`
-    const response = await fetch(url)
+    const response = await fetch(url, { credentials: 'include' })
     const data = await response.json()
     return data
   } catch (error) {

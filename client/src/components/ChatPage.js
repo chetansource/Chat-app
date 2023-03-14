@@ -12,8 +12,6 @@ function ChatPage({ socket }) {
   const [userList, setUserList] = useState([])
   const [focusedUser, setFocusedUser] = useState('')
 
-  console.log('1.', userList)
-
   useEffect(() => {
     socket.connect()
 
@@ -21,6 +19,7 @@ function ChatPage({ socket }) {
     socket.on('userId', async (userid) => {
       setUserId(userid)
       const name = await getUserName(userid)
+      console.log('1.', name)
       const username = name.user_name
       setUserName(username)
     })

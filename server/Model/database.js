@@ -91,7 +91,8 @@ export async function getUser(id) {
 
 //send message to a frd
 export async function insertMessage(msg, senderId, receiverId) {
-  const query = 'INSERT INTO messages(message,sender_id,receiver_id) VALUES($1,$2,$3)'
+  const query =
+    'INSERT INTO messages(message,sender_id,receiver_id) VALUES($1,$2,$3)'
   const params = [msg, senderId, receiverId]
   const res = await pool.query(query, params)
   return res

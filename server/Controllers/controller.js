@@ -95,7 +95,7 @@ export async function getMessages(req, res) {
 
 export async function addFriend(req, res) {
   try {
-    const uId = req.params.id
+    const uId = req.params.ids
     const isFriendNotAvailable = await userNameAvailable(req.body.userName)
     if (isFriendNotAvailable) {
       return res.status(400).json({ message: 'user not found' })
