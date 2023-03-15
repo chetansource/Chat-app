@@ -6,6 +6,7 @@ import {
   insertSocketId,
   getSocketId,
   deleteSession,
+  updateContactsTime,
 } from '../Model/database.js'
 
 export function socketConnection(httpServer) {
@@ -55,6 +56,7 @@ export function socketConnection(httpServer) {
         let newMessage = args.message //
         const msgTime = args.message_time
         await insertMessage(newMessage, socket.userId, receiverId)
+        await updateContactsTime(socket.userId, receiverId)
         io.to(socketId.socket_id).emit('message', {
           message: newMessage,
           message_time: msgTime,

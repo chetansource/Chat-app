@@ -10,7 +10,7 @@ import { authenticateToken } from '../Utility/middleware.js'
 
 export const router = express.Router()
 
-router.post('/signup', registerUser) //usersignup
+router.post('/signup', registerUser) //user signup
 router.post('/login', loginUser)
 router.get('/:id', authenticateToken, getUserinfo)
 router.get('/contacts/:id', authenticateToken, getUserContacts)

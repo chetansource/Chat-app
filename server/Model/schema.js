@@ -17,7 +17,8 @@ const messages = `CREATE TABLE messages(
 const contacts = `CREATE TABLE contacts( 
     contact_id serial PRIMARY KEY, 
     userID integer NOT NULL, 
-    connected_id integer NOT NULL, 
+    connected_id integer NOT NULL,
+    last_message_time TIMESTAMP, 
     CONSTRAINT fk_user_id FOREIGN KEY(userID) REFERENCES users(user_id), 
     CONSTRAINT fk_connected_id FOREIGN KEY(connected_id) REFERENCES users(user_id)
     );`
@@ -30,6 +31,6 @@ const sessions = `CREATE TABLE sessions(
     CONSTRAINT fk_user_id FOREIGN KEY(user_id) REFERENCES users(user_id)
 );`
 
-const insertUser = `INSERT INTO users(user_name) VALUES('chetan');`
+const insertUser = `INSERT INTO users(user_name) VALUES('chetan') ;`
 const insertMessage = `INSERT INTO messages(message,sender_id,receiver_id) VALUES('hey hello',1,2);`
 const getContactList = `select receiver_id from contacts where sender_id = id`

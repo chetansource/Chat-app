@@ -19,7 +19,6 @@ function ChatPage({ socket }) {
     socket.on('userId', async (userid) => {
       setUserId(userid)
       const name = await getUserName(userid)
-      console.log('1.', name)
       const username = name.user_name
       setUserName(username)
     })

@@ -11,9 +11,13 @@ function LoginPage() {
 
   async function LoginUser() {
     //show the error message field by field
-    if (userName.trim().length === 0) return [setErrorMessage('please enter username and password')]
+    if (userName.trim().length === 0)
+      return [setErrorMessage('please enter username and password')]
     if (password.trim().length < 6) {
-      return [setErrorMessage('password needs atleast 6 characters'), setPassword('')]
+      return [
+        setErrorMessage('password needs atleast 6 characters'),
+        setPassword(''),
+      ]
     }
     setPassword('')
 

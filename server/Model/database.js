@@ -106,15 +106,28 @@ export async function insertContactList(senderId, receiverId) {
   return res
 }
 
+export async function updateContactsTime(senderId, receiverId) {
+  const query =
+    'UPDATE contacts SET last_message_time= CURRENT_TIMESTAMP WHERE userid=$1 AND connected_id=$2 OR userid=$2 AND connected_id=$1'
+  const params = [senderId, receiverId]
+  const res = await pool.query(query, params)
+  return res
+}
+
 //get the contact list which user have connected to
 export async function getContacts(id) {
-  const query = `SELECT user_name FROM users 
-  INNER JOIN( 
-  SELECT userid FROM contacts  WHERE connected_id=$1
+  const query = `SELECT contacts.userid,contacts.last_message_time,users.user_name FROM contacts
+  LEFT JOIN
+  users
+  ON contacts.userid=users.user_id
+  WHERE contacts.connected_id=$1
   UNION
-  SELECT connected_id FROM contacts WHERE userid=$1
-  ) as u 
-  ON users.user_id = u.userid`
+  SELECT contacts.connected_id,contacts.last_message_time,users.user_name  FROM contacts
+  LEFT JOIN 
+  users
+  ON contacts.connected_id= users.user_id
+  WHERE contacts.userid=$1	
+  ORDER BY last_message_time DESC`
   const params = [id]
   const res = await pool.query(query, params)
   return res.rows
