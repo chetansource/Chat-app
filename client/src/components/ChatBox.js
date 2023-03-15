@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getMessages } from '../requests.js'
 import './ChatBox.css'
 
-function ChatBox({ socket, selectedUser, userid }) {
+function ChatBox({ socket, selectedUser, userid, userList, setUserList }) {
   const [userId, setUserId] = useState(0)
   const [text, setText] = useState('')
   const [textList, setTextList] = useState([])
@@ -14,12 +14,15 @@ function ChatBox({ socket, selectedUser, userid }) {
       ...textList,
       { message: text, sender_id: userid, message_time: Date.now() },
     ])
-
     socket.emit('chat-message', {
       message: text,
       receiverName: selectedUser,
       message_time: Date.now(),
     })
+    const foundIdx = userList.findIndex((el) => el === selectedUser)
+    let tempUserList = userList.splice(foundIdx, 1)
+    tempUserList = [...tempUserList, ...userList]
+    setUserList(tempUserList)
 
     setText('')
   }

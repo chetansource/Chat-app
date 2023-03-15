@@ -5,6 +5,8 @@ import ChatBox from './ChatBox'
 import ConnectBox from './ConnectBox'
 import { getFriendsList, getUserName } from '../requests.js'
 
+let friList
+
 function ChatPage({ socket }) {
   const navigate = useNavigate()
   const [userId, setUserId] = useState('')
@@ -23,9 +25,13 @@ function ChatPage({ socket }) {
       setUserName(username)
     })
 
-    const friList = async () => {
+    friList = async () => {
       if (userId !== '') {
         let friendsList = await getFriendsList(userId)
+        friendsList = friendsList.sort(
+          (a, b) =>
+            (a.last_message_time === null) - (b.last_message_time === null)
+        )
         friendsList = friendsList.map((list) => list.user_name)
         setUserList(friendsList)
       }
@@ -68,7 +74,13 @@ function ChatPage({ socket }) {
             ))}
           </ol>
         </div>
-        <ChatBox socket={socket} selectedUser={focusedUser} userid={userId} />
+        <ChatBox
+          socket={socket}
+          selectedUser={focusedUser}
+          userid={userId}
+          userList={userList}
+          setUserList={setUserList}
+        />
         <ConnectBox
           userid={userId}
           userList={userList}
