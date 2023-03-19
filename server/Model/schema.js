@@ -16,7 +16,7 @@ const messages = `CREATE TABLE messages(
 
 const contacts = `CREATE TABLE contacts( 
     contact_id serial PRIMARY KEY, 
-    userID integer NOT NULL, 
+    user_ID integer NOT NULL, 
     connected_id integer NOT NULL,
     last_message_time TIMESTAMP, 
     CONSTRAINT fk_user_id FOREIGN KEY(userID) REFERENCES users(user_id), 

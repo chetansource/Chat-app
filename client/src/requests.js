@@ -28,7 +28,7 @@ export async function loginUser(name, passwd) {
     const config = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json', //http
       },
       credentials: 'include',
       body: JSON.stringify({
@@ -38,12 +38,8 @@ export async function loginUser(name, passwd) {
     }
     const url = globalUrl + '/users/login'
     const response = await fetch(url, config)
-    const status = response.status
-    if (status === 200) {
-      return [response.status, await response.json()]
-    } else {
-      return await response.json()
-    }
+    if (response.status !== 200) return response.status
+    return [response.status, await response.json()]
   } catch (error) {
     console.log(error)
   }
@@ -96,11 +92,8 @@ export async function addFrdtoContacts(userId, frdName) {
     }
     const url = globalUrl + `/users/${userId}`
     const response = await fetch(url, config)
-    const status = response.status
-    if (status === 400) {
-      return await response.json()
-    }
-    return status
+    if (response.status !== 400) return response.status
+    return await response.json()
   } catch (error) {
     console.log(error)
   }

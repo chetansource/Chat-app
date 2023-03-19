@@ -5,12 +5,10 @@ import ChatBox from './ChatBox'
 import ConnectBox from './ConnectBox'
 import { getFriendsList, getUserName } from '../requests.js'
 
-let friList
-
 function ChatPage({ socket }) {
   const navigate = useNavigate()
-  const [userId, setUserId] = useState('')
-  const [userName, setUserName] = useState('')
+  const [userId, setUserId] = useState('') //default value should be null
+  const [userName, setUserName] = useState('') // userInfo object for userid and
   const [userList, setUserList] = useState([])
   const [focusedUser, setFocusedUser] = useState('')
 
@@ -25,8 +23,9 @@ function ChatPage({ socket }) {
       setUserName(username)
     })
 
-    friList = async () => {
+    const friList = async () => {
       if (userId !== '') {
+        //check for false con
         let friendsList = await getFriendsList(userId)
         friendsList = friendsList.sort(
           (a, b) =>
@@ -92,3 +91,4 @@ function ChatPage({ socket }) {
 }
 
 export default ChatPage
+//half duplex

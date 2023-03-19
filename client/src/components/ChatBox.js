@@ -19,8 +19,8 @@ function ChatBox({ socket, selectedUser, userid, userList, setUserList }) {
       receiverName: selectedUser,
       message_time: Date.now(),
     })
-    const foundIdx = userList.findIndex((el) => el === selectedUser)
-    let tempUserList = userList.splice(foundIdx, 1)
+    const foundIdx = userList.findIndex((el) => el === selectedUser) //what if the foundidex is not found
+    let tempUserList = userList.splice(foundIdx, 1) //
     tempUserList = [...tempUserList, ...userList]
     setUserList(tempUserList)
 
@@ -133,3 +133,4 @@ function ChatBox({ socket, selectedUser, userid, userList, setUserList }) {
 export default ChatBox
 
 //use tailwind and chakra ui
+// implement notification and work on ui

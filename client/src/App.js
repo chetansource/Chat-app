@@ -5,7 +5,6 @@ import ChatPage from './components/ChatPage'
 import LoginPage from './components/LoginPage'
 import { io } from 'socket.io-client'
 import SignUpPage from './components/SignUpPage'
-import ChatBox from './components/ChatBox'
 
 const socket = io('http://localhost:3001', {
   autoConnect: false,
@@ -27,3 +26,4 @@ function App() {
 }
 
 export default App
+//private and public routes
