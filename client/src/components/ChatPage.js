@@ -7,7 +7,7 @@ import { getFriendsList, getUserName } from '../requests.js'
 
 function ChatPage({ socket }) {
   const navigate = useNavigate()
-  const [userId, setUserId] = useState('') //default value should be null
+  const [userId, setUserId] = useState(null)
   const [userName, setUserName] = useState('') // userInfo object for userid and
   const [userList, setUserList] = useState([])
   const [focusedUser, setFocusedUser] = useState('')
@@ -23,9 +23,9 @@ function ChatPage({ socket }) {
       setUserName(username)
     })
 
-    const friList = async () => {
-      if (userId !== '') {
-        //check for false con
+    const userFriendsList = async () => {
+      if (userId === null) return
+      {
         let friendsList = await getFriendsList(userId)
         friendsList = friendsList.sort(
           (a, b) =>
@@ -35,7 +35,7 @@ function ChatPage({ socket }) {
         setUserList(friendsList)
       }
     }
-    friList()
+    userFriendsList()
   }, [socket, userId])
 
   function navLogin() {

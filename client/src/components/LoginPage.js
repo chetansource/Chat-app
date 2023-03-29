@@ -10,7 +10,6 @@ function LoginPage() {
   const [errorMessage, setErrorMessage] = useState('')
 
   async function LoginUser() {
-    //show the error message field by field
     if (userName.trim().length === 0)
       return [setErrorMessage('please enter username and password')]
     if (password.trim().length < 6) {
@@ -22,6 +21,9 @@ function LoginPage() {
     setPassword('')
 
     const loginData = await loginUser(userName, password)
+    if (loginData[0] === 200) {
+      navigate('/chatpage')
+    }
     userErrors(loginData)
   }
 
@@ -30,8 +32,6 @@ function LoginPage() {
       setErrorMessage('please enter correct user name')
     } else if (data.message === 'Invalid Credentials') {
       setErrorMessage('Incorrect password')
-    } else if (data[0] === 200) {
-      navigate('/chatpage')
     }
   }
   function signupRoute() {
