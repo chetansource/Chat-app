@@ -10,17 +10,28 @@ function SignUpPage() {
   const [confirmPassword, setConfirmpassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   async function registerUser() {
-    if (username.trim().length === 0) return [setErrorMessage('please enter username')]
+    if (username.trim().length === 0)
+      return [setErrorMessage('please enter username')]
     setUsername('')
     if (passWord.trim().length < 6) {
-      return [setErrorMessage('password needs atleast 6 characters'), setPassWord('')]
+      return [
+        setErrorMessage('password needs atleast 6 characters'),
+        setPassWord(''),
+      ]
     }
     setPassWord('')
     if (confirmPassword.trim().length < 6) {
-      return [setErrorMessage('password needs atleast 6 characters'), setConfirmpassword('')]
+      return [
+        setErrorMessage('password needs atleast 6 characters'),
+        setConfirmpassword(''),
+      ]
     }
     setConfirmpassword('')
-    const data = await userSignup(username.trim(), passWord.trim(), confirmPassword.trim())
+    const data = await userSignup(
+      username.trim(),
+      passWord.trim(),
+      confirmPassword.trim()
+    )
     if (data.message === 'username already exist') {
       setErrorMessage('choose different user name')
     } else if (data.message === 'Invalid Credentials') {
@@ -35,43 +46,91 @@ function SignUpPage() {
   }
 
   return (
-    <div className="wrapper">
-      <div className="signbar">
-        <button className="barele" onClick={changeRoute}>
-          Login
-        </button>
-      </div>
-      <form className="signupform" onSubmit={(e) => e.preventDefault()}>
-        <div className="smallwrapper">
-          <div className="sign-label">signup</div>
-          <div className="details">
-            <label className="">Username</label>
-            <input
-              className="usr"
-              placeholder="Enter username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <label className="">Password</label>
-            <input
-              type="password"
-              className="pass"
-              placeholder="enter password"
-              value={passWord}
-              onChange={(e) => setPassWord(e.target.value)}
-            />
-            <label>Confirm Password</label>
-            <input
-              type="password"
-              className="pin"
-              placeholder="confirm password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmpassword(e.target.value)}
-            />
-            <p className="usrName">{errorMessage}</p>
-            <button className="btn" onClick={registerUser}>
-              Create Account
-            </button>
+    // <div className="wrapper">
+    <div className="flex items-center h-screen">
+      <form
+        className="mx-auto max-w-[350px] space-y-6"
+        onSubmit={(e) => e.preventDefault()}
+      >
+        <div className="space-y-2 text-center">
+          <h1 className="text-3xl font-bold">Sign Up</h1>
+          <p className="text-black ">
+            Enter your information to create an account
+          </p>
+        </div>
+        <div>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label
+                className="block text-sm font-medium text-black"
+                htmlFor="username"
+              >
+                Username
+              </label>
+              <input
+                className="block w-full border-2 border-black rounded-md shadow-sm p-2"
+                id="username"
+                placeholder="Enter your username"
+                required
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <label
+                className="block text-sm font-medium text-black"
+                htmlFor="password"
+              >
+                Password
+              </label>
+              <input
+                className="block w-full border-2 border-black rounded-md shadow-sm p-2"
+                id="password"
+                placeholder="Enter your password"
+                required
+                type="password"
+                value={passWord}
+                onChange={(e) => setPassWord(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <label
+                className="block text-sm font-medium text-black"
+                htmlFor="confirm-password"
+              >
+                Confirm Password
+              </label>
+              <input
+                className="block w-full border-2 border-black rounded-md shadow-sm p-2"
+                id="confirm-password"
+                placeholder="Enter your password again"
+                required
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmpassword(e.target.value)}
+              />
+            </div>
+            <div className="flex justify-center">
+              <button
+                className="w-full btn btn-primary  flex justify-center pt-1"
+                type="submit"
+                onClick={registerUser}
+              >
+                Create Account
+              </button>
+            </div>
+            <p className="loginError">{errorMessage}</p>
+            <div className="mt-4 text-center text-sm">
+              Already have an account?
+              <button
+                onClick={changeRoute}
+                className="px-2 text-green-600 underline"
+              >
+                Login
+              </button>
+              in instead.
+            </div>
           </div>
         </div>
       </form>

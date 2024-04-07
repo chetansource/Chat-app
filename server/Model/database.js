@@ -14,7 +14,9 @@ const databaseConfig = {
 
 const pool = new Pool(databaseConfig)
 
-console.log('Connected to the database')
+if (pool.options.user !== undefined) { 
+  console.log('Connected to the database')
+}
 
 //checking if the username already exists or not
 
