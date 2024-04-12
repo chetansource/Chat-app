@@ -39,35 +39,75 @@ function LoginPage() {
   }
 
   return (
-    <div className="loginpage">
-      <div className="loginbar">
-        <button className="barelement" onClick={signupRoute}>
-          signup
-        </button>
-      </div>
-      <form className="loginform" onSubmit={(e) => e.preventDefault()}>
-        <div className="container">
-          <div className="title">Login</div>
-          <div className="elements">
-            <label>Username</label>
-            <input
-              className="username"
-              placeholder="Enter UserName"
-              value={userName}
-              onChange={(event) => setUserName(event.target.value)}
-            ></input>
-            <label className="passlabel">Password</label>
-            <input
-              type="password"
-              className="password"
-              placeholder="Enter password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            ></input>
+    <div className="flex items-center h-screen">
+      <form
+        className="mx-auto max-w-[350px] space-y-6 border-2 border-black px-6
+  py-12 rounded-lg"
+        onSubmit={(e) => e.preventDefault()}
+      >
+        <div className="space-y-2 text-center ">
+          <h1 className="text-3xl font-bold">Welcome Back </h1>
+          <p className="text-black ">
+            Enter your credentials to login
+          </p>
+        </div>
+        <div>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label
+                className="block text-sm font-medium text-black"
+                htmlFor="username"
+              >
+                Username
+              </label>
+              <input
+                className="block w-full border-2 border-black rounded-md
+        shadow-sm p-2"
+                id="username"
+                placeholder="Enter your username"
+                required
+                type="text"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <label
+                className="block text-sm font-medium text-black"
+                htmlFor="password"
+              >
+                Password
+              </label>
+              <input
+                className="block w-full border-2 border-black rounded-md shadow-sm p-2"
+                id="password"
+                placeholder="Enter your password"
+                required
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="flex justify-center">
+              <button
+                className="w-full btn btn-primary  flex justify-center pt-1"
+                type="submit"
+                onClick={LoginUser}
+              >
+                Login
+              </button>
+            </div>
             <p className="loginError">{errorMessage}</p>
-            <button className="addUser" onClick={LoginUser}>
-              SignIn
-            </button>
+            <div className="mt-4 text-center text-sm">
+              Already Don't an account?
+              <button
+                onClick={signupRoute}
+                className="px-2 text-green-600 underline"
+              >
+                Signup
+              </button>
+              in instead.
+            </div>
           </div>
         </div>
       </form>
@@ -76,3 +116,5 @@ function LoginPage() {
 }
 
 export default LoginPage
+
+

@@ -46,13 +46,12 @@ function SignUpPage() {
   }
 
   return (
-    // <div className="wrapper">
     <div className="flex items-center h-screen">
       <form
-        className="mx-auto max-w-[350px] space-y-6"
+        className="mx-auto max-w-[350px] space-y-6 border-2 border-black px-6 py-12 rounded-lg"
         onSubmit={(e) => e.preventDefault()}
       >
-        <div className="space-y-2 text-center">
+        <div className="space-y-2 text-center ">
           <h1 className="text-3xl font-bold">Sign Up</h1>
           <p className="text-black ">
             Enter your information to create an account
