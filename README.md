@@ -3,7 +3,7 @@
 Welcome to my project! This is a brief guide on how to get started with the frontend and backend.
 
 ##Login Page
-![Alt Text](https://drive.google.com/file/d/1KWhxmggE6dWTXXC6b46kzp0kZBAsZhkP/view?usp=sharing)
+![Example Image](https://drive.google.com/file/d/1KWhxmggE6dWTXXC6b46kzp0kZBAsZhkP/view?usp=sharing)
 
 ## Getting Started
 
