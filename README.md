@@ -24,3 +24,18 @@ npm install
 cd ../server
 npm install
 
+Navigate to the client directory:
+
+cd client
+
+Run the frontend server:
+
+npm run start
+
+Navigate to the server directory:
+
+cd server
+
+Run the backend server:
+
+npm run dev
