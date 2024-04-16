@@ -24,25 +24,3 @@ npm install
 cd ../server
 npm install
 
-3.Navigate to the client directory:
-
-```sh
-cd client
-
-Run the frontend server:
-
-```sh
-npm run start
-
-4.Navigate to the server directory:
-
-```sh
-cd server
-Run the backend server:
-
-```sh
-npm run dev
-
-   Usage
-You can now access the project at http://localhost:3000 for the frontend
-
