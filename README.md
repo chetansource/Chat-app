@@ -16,6 +16,33 @@ You need to have Node.js and PostgreSQL server installed on your machine.
    ```sh
    git clone repo-link
 
+2.Install NPM packages in both the client and server directories:
+
+```sh
+cd client
+npm install
+cd ../server
+npm install
+
+3.Navigate to the client directory:
+
+```sh
+cd client
+
+Run the frontend server:
+
+```sh
+npm run start
+
+4.Navigate to the server directory:
+
+```sh
+cd server
+Run the backend server:
+
+```sh
+npm run dev
+
    Usage
 You can now access the project at http://localhost:3000 for the frontend
 
