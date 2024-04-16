@@ -8,16 +8,16 @@ You need to have Node.js and PostgreSQL server installed on your machine.
 
 Installation
 Clone the repo
-sh
-Copy code
 git clone repo-link
+
+
 Install NPM packages in both the client and server directories
-sh
-Copy code
+
 cd client
 npm install
 cd ../server
 npm install
+
 Starting the Frontend
 Navigate to the client directory
 sh
